@@ -96,7 +96,7 @@ var LoginUserName = React.createClass({
   },
 
   render: function(){
-    return <TextField errorText={this.props.errorText} value={this.state.username} onBlur={this._onLoseFocus} onChange={this._onTextChange} floatingLabelText="your username" hintText="username"/>
+    return <TextField errorText={this.props.errorText} name="username" value={this.state.username} onBlur={this._onLoseFocus} onChange={this._onTextChange} floatingLabelText="your username" hintText="username"/>
   },
 
   _onTextChange: function(event, value) {
@@ -122,7 +122,7 @@ var LoginUserName = React.createClass({
 var LoginPassword = React.createClass({
 
   render: function(){
-    return <TextField errorText={this.props.errorText} floatingLabelText="your password" hintText="password"/>
+    return <TextField errorText={this.props.errorText} name="password" floatingLabelText="your password" hintText="password"/>
   }
 
 });
