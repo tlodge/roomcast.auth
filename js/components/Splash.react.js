@@ -1,6 +1,6 @@
 var React = require('react');
 var $ = require('jquery');
-
+var extend = require('extend');
 var windowheight =  $(window).height();
 var windowwidth  =  $(window).width();
 
@@ -12,71 +12,133 @@ var Splash = React.createClass({
 
   componentDidMount: function() {
     window.addEventListener('resize', this._resize);
+    var mql = window.matchMedia('(min-width: 800px)');
+    mql.addListener(this.mediaQueryChanged);
+    this.setState({mql:mql, mobile: !mql.matches});
   },
 
   componentWillUnmount: function() {
     window.removeEventListener('resize', this._resize);
+    this.state.removeListener(this.mediaQueryChanged);
+  },
+
+  mediaQueryChanged: function(){
+    this.setState({mobile: !this.state.mql.matches});
   },
 
   render: function(){
-    console.log("rendering..");
-    
 
-    var imagestyle={
-      width:"100%",
+    var screen;
+
+    var props = {
+      width:this.state.width,
+      height:this.state.height
     };
 
-    if (this.state.width/this.state.height <= 1.9){
-      imagestyle={
-        height:"100%",
-      };
-    }
+    if (this.state.mobile) 
+        screen = <Mobile {...props}/>;
+    else
+        screen = <BigScreen {...props}/>;
+        
+
+    return <div>{screen}</div>;         
+  },
+
+  _resize: function(){
+    this.setState({width:$(window).width(), height:$(window).height()});
+  }
+
+});
+
+var BigScreen = React.createClass({
+  render: function(){
+    
+    var logoaspect        = 500/180;
+    var labelboxheight    = 40;
+    
+    var containerheight = this.props.height/2;
+    var imageheight    = this.props.height/2 - labelboxheight;
+    var topimagewidth     = this.props.width/4;
+    var bottomimagewidth  = this.props.width/2;
+
+    
+    var labelbox = {
+      width: "100%",
+      height: labelboxheight,
+      position: 'absolute',
+      bottom: 0,
+      color: 'white',
+      textAlign: 'center',
+      lineHeight: labelboxheight + "px",
+      fontSize: "140%",
+    };
+
+    var lhlabelbox = extend ({
+      background: "#cd804a",
+    }, labelbox);
+    
+    var rhlabelbox= extend ({
+      background: "#d35a51",
+    },labelbox);
+
+    var blabelbox = extend ({
+      background: "#008080",
+    },labelbox);
+
+    var smallimagestyle={
+      width: topimagewidth > imageheight ? "100%" : 'auto',
+      height: imageheight > topimagewidth ? "100%" : 'auto',
+      verticalAlign: 'middle',
+    };
+
+    var largeimagestyle = {
+      width: bottomimagewidth/2 > imageheight ? "100%" : 'auto',
+      height: imageheight > bottomimagewidth/2 ? "100%" : 'auto',
+      verticalAlign: 'middle',
+    };
 
     var leftscreen = {
       position: 'absolute',
-      width: Math.ceil(this.state.width/2),
+      width: Math.ceil(this.props.width/2),
       left: 0,
       top: 0
     };
 
     var rightscreen = {
       position: 'absolute',
-      width: Math.ceil(this.state.width/2),
+      width: Math.ceil(this.props.width/2),
       height: "100%",
-      left: Math.floor(this.state.width/2),
+      left: Math.floor(this.props.width/2),
       top: 0,
 
     };
 
     var tl = {
       position: 'absolute',
-      width: Math.ceil(this.state.width/4),
-      height: Math.ceil(this.state.height/2),
+      width: Math.ceil(this.props.width/4),
+      height: containerheight,
       left: 0,
       top: 0,
-      //background: 'red',
       overflowX: 'hidden',
       overflowY: 'hidden',
     };
 
     var tr= {
       position: 'absolute',
-      width: Math.ceil(this.state.width/4),
-      height: Math.ceil(this.state.height/2),
-      left: Math.floor(this.state.width/4),
+      width: Math.ceil(this.props.width/4),
+      height: containerheight,
+      left: Math.floor(this.props.width/4),
       top: 0,
-      // background: 'green',
       overflowX: 'hidden',
       overflowY: 'hidden',
     };
 
     var b= {
       position: 'absolute',
-      width: Math.ceil(this.state.width/2),
-      height: Math.ceil(this.state.height/2),
+      width: Math.ceil(this.props.width/2),
+      height: containerheight,
       left: 0,
-      top: Math.floor(this.state.height/2),
-      // background: 'blue',
+      top: containerheight,
       overflowX: 'hidden',
       overflowY: 'hidden',
     };
@@ -85,7 +147,26 @@ var Splash = React.createClass({
       width: "100%",
       height: "100%",
       background: "#445662",
-     
+    };
+
+    var logotextcontainer = {
+      color: 'white',
+      width: '100%',
+      height: this.props.height - (bottomimagewidth / logoaspect),
+      textAlign: 'center',
+      boxSizing: 'border-box',
+      paddingTop: (this.props.height - (bottomimagewidth / logoaspect)) /2 ,
+    };
+
+    var logoheading ={
+      fontSize: '500%',
+      textTransform: 'uppercase',
+    };
+
+    var logosubheading ={
+      fontSize: '150%',
+      lineHeight: '400%',
+      letterSpacing: '2px',
     };
 
     var logostyle = {
@@ -94,37 +175,164 @@ var Splash = React.createClass({
       width: '100%',
     };
 
-    var bottomimagestyle={
-      width: "100%"
-    };
+
 
     return  <div>
               <div style={leftscreen}>
                 <div style={tl}>
-                  <img style={imagestyle} src="../svgs/register.svg"/>
+                  <img style={smallimagestyle} src="../svgs/register.svg"/>
+                  <div style={lhlabelbox}>register</div>
                 </div>
                  <div style={tr}>
-                  <img style={imagestyle} src="../svgs/login.svg"/>
+                  <img style={smallimagestyle} src="../svgs/login.svg"/>
+                  <div style={rhlabelbox}>login</div>
                 </div>
                  <div style={b}>
-                  <img style={bottomimagestyle} src="../svgs/register_building.svg"/>
-                </div>
+                  <img style={largeimagestyle} src="../svgs/register_building.svg"/>
+                  <div style={blabelbox}>register building</div>
+              </div>
                  
               </div>
               <div style={rightscreen}>
                 <div style={roomcast}>
+                  <div style ={logotextcontainer}>
+                    <div style={logoheading}>roomcast</div>
+                    <div style={logosubheading}>the internet of getting things done</div>
+                  </div> 
                   <img style={logostyle} src="../svgs/cloudlogo.svg"/>
                 </div>
               </div>
-            </div>
+            </div>;
 
-            ;
-  },
-
-  _resize: function(){
-    this.setState({width:$(window).width(), height:$(window).height()});
   }
-
 });
+
+var Mobile = React.createClass({
+   render: function(){
+    var logobarheight     = 56;
+    var labelboxheight    = 40;
+    
+    var containerheight = (this.props.height-logobarheight)/2;
+    
+
+    var topimageheight    =  (this.props.height-logobarheight)/2 - labelboxheight;
+    var topimagewidth     = this.props.width/2;
+
+
+    var bottomimageheight = (this.props.height - logobarheight)/2 - labelboxheight;
+    var bottomimagewidth  = this.props.width;
+
+    
+    var labelbox = {
+      width: "100%",
+      height: labelboxheight,
+      position: 'absolute',
+      bottom: 0,
+      color: 'white',
+      textAlign: 'center',
+      lineHeight: labelboxheight + "px",
+      fontSize: "140%",
+    };
+
+    var lhlabelbox = extend ({
+      background: "#cd804a",
+    }, labelbox);
+    
+    var rhlabelbox= extend ({
+      background: "#d35a51",
+    },labelbox);
+
+    var blabelbox = extend ({
+      background: "#008080",
+    },labelbox);
+
+    var smallimagestyle={
+      width: topimagewidth > topimageheight ? "100%" : 'auto',
+      height: topimageheight > topimagewidth ? "100%" : 'auto',
+      verticalAlign: 'middle',
+    };
+
+    var largeimagestyle = {
+      width: bottomimagewidth/2 > bottomimageheight ? "100%" : 'auto',
+      height: bottomimageheight > bottomimagewidth/2 ? "100%" : 'auto',
+      verticalAlign: 'middle',
+    };
+
+    var leftscreen = {
+      position: 'absolute',
+      width: "100%",
+      left: 0,
+      top: 0
+    };
+
+    var tl = {
+      position: 'absolute',
+      width: topimagewidth,
+      height: containerheight,
+      left: 0,
+      top: logobarheight,
+      overflowX: 'hidden',
+      overflowY: 'hidden',
+    };
+
+    var tr= {
+      position: 'absolute',
+      width: topimagewidth,
+      height: containerheight,
+      left: topimagewidth,
+      top: logobarheight,
+      overflowX: 'hidden',
+      overflowY: 'hidden',
+    };
+
+    var b= {
+      position: 'absolute',
+      width: Math.ceil(this.props.width),
+      height: containerheight,
+      left: 0,
+      top: containerheight + logobarheight,
+      overflowX: 'hidden',
+      overflowY: 'hidden',
+    }; 
+
+    var logoheading ={
+      fontSize: '500%',
+      textTransform: 'uppercase',
+    };
+
+    var logobar = {
+       background: "#445662",
+       height: logobarheight,
+       width: '100%',
+       color: 'white',
+       textAlign: 'center',
+       lineHeight: logobarheight + 'px',
+       fontSize: '200%',
+       textTransform: 'uppercase',
+
+    };
+
+    return  <div>
+              <div style={leftscreen}>
+                <div style={logobar}>
+                  roomcast
+                </div>
+                <div style={tl}>
+                  <img style={smallimagestyle} src="../svgs/register.svg"/>
+                  <div style={lhlabelbox}>register</div>
+                </div>
+                <div style={tr}>
+                  <img style={smallimagestyle} src="../svgs/login.svg"/>
+                  <div style={rhlabelbox}>login</div>
+                </div>
+                <div style={b}>
+                  <img style={largeimagestyle} src="../svgs/register_building.svg"/>
+                  <div style={blabelbox}>register building</div>
+                </div>
+              </div>
+            </div>;
+  }
+});
+
 
 module.exports = Splash;
