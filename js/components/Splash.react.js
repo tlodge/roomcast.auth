@@ -229,7 +229,7 @@ var BigScreen = React.createClass({
                 </div>
                  <div style={tr} onTouchTap={this._loginScreen}>
                   <img style={smallimagestyle} src="../svgs/login.svg"/>
-                  <div style={rhlabelbox}>login</div>
+                  <div style={rhlabelbox}>log in</div>
                 </div>
                  <div style={b} onTouchTap={this._registerBuildingScreen}>
                   <img style={largeimagestyle} src="../svgs/register_building.svg"/>
