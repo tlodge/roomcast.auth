@@ -376,21 +376,37 @@ var Mobile = React.createClass({
                 <div style={logobar}>
                   roomcast
                 </div>
-                <div style={tl}>
+                <div style={tl} onTouchTap={this._registerScreen}>
                   <img style={smallimagestyle} src="../svgs/register.svg"/>
                   <div style={lhlabelbox}>register</div>
                 </div>
-                <div style={tr}>
+                <div style={tr} onTouchTap={this._loginScreen}>
                   <img style={smallimagestyle} src="../svgs/login.svg"/>
                   <div style={rhlabelbox}>login</div>
                 </div>
-                <div style={b}>
+                <div style={b} onTouchTap={this._registerBuildingScreen}>
                   <img style={largeimagestyle} src="../svgs/register_building.svg"/>
                   <div style={blabelbox}>register building</div>
                 </div>
               </div>
             </div>;
-  }
+  },
+
+  _loginScreen: function(){
+      console.log("changing to login!!");
+      this.props.changeScreen("login");
+  },
+
+  _registerScreen: function(){
+      console.log("changing to register!!");
+      this.props.changeScreen("register");
+  },
+
+  _registerBuildingScreen: function(){
+      console.log("changing to register building!!");
+      this.props.changeScreen("registerbuilding");
+  },
+
 });
 
 
