@@ -123,3 +123,22 @@ span.optionsquestion{
   position: relative;
   bottom: 0px;
 }
+
+/* utility classes */
+
+.left{
+  float: left !important;
+}
+
+.right{
+ float: right !important;
+}
+
+.clearfix::after{
+  clear: both;
+}
+
+.clearfix::before, .clearfix::after{
+  content: " ";
+  display:table;
+}

@@ -1,6 +1,7 @@
 var React = require('react');
 var TextField = require('./mui/text-field');
 var WebAPIUtils = require('../utils/WebAPIUtils');
+var ScreenActionCreators = require('../actions/ScreenActionCreators');
 
 var Login = React.createClass({
 
@@ -38,8 +39,8 @@ var Login = React.createClass({
       height: toolbarheight,
       color: 'white',
       lineHeight: toolbarheight + 'px',
-      fontSize: '250%',
       paddingLeft: 10,
+      paddingRight: 10,
     };
 
     var loginback = {
@@ -93,11 +94,23 @@ var Login = React.createClass({
           </div>
         </form>
       </Paper>*/
+    
+    var maintitle = {
+      fontSize: '250%',
+    };
+    
+    var back = {
+      fontSize: '180%',
+    };
+
+    var left={float:left, color: 'white'};
+    var right={float:right, color: 'white'};
 
 		return(
       <div>
-        <div style={topbar}>
-            login
+        <div className='clearfix' style={topbar}>
+            <a style={maintitle} className='left'>login</a>
+            <a onTouchTap={this._handleBack} style={back} className='right'>back</a>
         </div>
   			<div style={loginback}>
           <div style={sociallogin}>
@@ -136,6 +149,10 @@ var Login = React.createClass({
       this.setState({passworderror:"please provide your password!"});
       e.preventDefault();
     }
+  },
+
+  _handleBack: function(){
+    ScreenActionCreators.changeScreen("splash");
   },
 
 	/**

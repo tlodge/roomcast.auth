@@ -1,6 +1,7 @@
 var React = require('react');
 var TextField = require('./mui/text-field');
 var WebAPIUtils = require('../utils/WebAPIUtils');
+var ScreenActionCreators = require('../actions/ScreenActionCreators');
 
 var Register = React.createClass({
 
@@ -38,8 +39,8 @@ var Register = React.createClass({
       height: toolbarheight,
       color: 'white',
       lineHeight: toolbarheight + 'px',
-      fontSize: '250%',
       paddingLeft: 10,
+      paddingRight: 10,
     };
 
     var loginback = {
@@ -81,6 +82,18 @@ var Register = React.createClass({
         color: 'black',
         textAlign: 'center',
     };
+
+    var maintitle = {
+      fontSize: '250%',
+    };
+    
+    var back = {
+      fontSize: '180%',
+    };
+
+    var left={float:left, color: 'white'};
+    var right={float:right, color: 'white'};
+
     /*
     <form ref="login" onSubmit={this._handleSubmit} className="loginbox"  action="/login" method="post">
           <div className="logintitle"> <strong> roomcast </strong>login </div>
@@ -96,8 +109,9 @@ var Register = React.createClass({
 
 		return(
       <div>
-        <div style={topbar}>
-            register
+        <div className='clearfix' style={topbar}>
+            <a style={maintitle} className='left'>register</a>
+            <a onTouchTap={this._handleBack} style={back} className='right'>back</a>
         </div>
   			<div style={loginback}>
           <div style={sociallogin}>
@@ -138,6 +152,9 @@ var Register = React.createClass({
     }
   },
 
+  _handleBack: function(){
+    ScreenActionCreators.changeScreen("splash");
+  },
 	/**
  	 * Event handler for 'change' events coming from the stores
  	 */
