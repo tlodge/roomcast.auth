@@ -77,7 +77,7 @@ var Register = React.createClass({
 
     var title = {
         width : "100%",
-        fontSize: "100%",
+        fontSize: "120%",
         color: 'black',
         textAlign: 'center',
     };
