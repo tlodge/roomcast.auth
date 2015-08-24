@@ -2,7 +2,7 @@ var React = require('react');
 var TextField = require('./mui/text-field');
 var WebAPIUtils = require('../utils/WebAPIUtils');
 
-var Login = React.createClass({
+var Register = React.createClass({
 
 	getInitialState: function() {
     return {username:"", password:"", usernameerror:"", passworderror:""};
@@ -43,7 +43,7 @@ var Login = React.createClass({
     };
 
     var loginback = {
-      background: "url(../svgs/loginback.svg) no-repeat center center fixed",
+      background: "url(../svgs/registerback.svg) no-repeat center center fixed",
       width: this.props.width,
       height: this.props.height-toolbarheight,
       backgroundSize: 'cover',
@@ -97,14 +97,14 @@ var Login = React.createClass({
 		return(
       <div>
         <div style={topbar}>
-            login
+            register
         </div>
   			<div style={loginback}>
           <div style={sociallogin}>
-            <div style={title}>login with <strong>facebook</strong> or <strong>google</strong></div>
+            <div style={title}>link with <strong>facebook</strong> or <strong>google</strong></div>
           </div>
           <div style={roomcastlogin}>
-            <div style={title}>login with your <strong>roomcast</strong> account </div>
+            <div style={title}>or create a <strong>roomcast</strong> account </div>
           </div>
         </div>
       </div>
@@ -184,4 +184,4 @@ var LoginPassword = React.createClass({
 
 });
 
-module.exports = Login;
+module.exports = Register;

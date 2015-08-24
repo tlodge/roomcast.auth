@@ -49,8 +49,6 @@ ScreenStore.dispatchToken = AppDispatcher.register(function(action) {
   switch(action.action.type) {
 
   case ActionTypes.CHANGE_SCREEN:
-    console.log("ok seen a screen change!!");
-    console.log(action.action.screen);
     _set_screen(action.action.screen);
     ScreenStore.emitChange();
     break;

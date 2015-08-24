@@ -4,6 +4,7 @@ var extend = require('extend');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
 var ScreenStore = require('../stores/ScreenStore');
 var Login = require("./Login.react");
+var Register = require("./Register.react");
 
 injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
@@ -60,7 +61,11 @@ var Splash = React.createClass({
         break;
       
       case "login":
-        screen = <Login />;
+        screen = <Login {...props} />;
+        break;
+
+      case "register":
+        screen = <Register {...props} />;
         break;
 
       default:
