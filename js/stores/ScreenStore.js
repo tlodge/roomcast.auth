@@ -12,12 +12,16 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 var ActionTypes = AuthConstants.ActionTypes;
-var _loggedIn = false;
+var _screen = "splash";
 
-var AuthenticationStore = assign({}, EventEmitter.prototype, {
+var _set_screen = function(screen){
+  _screen = screen;
+};
 
-  loggedIn: function() {
-    return _loggedIn;
+var ScreenStore = assign({}, EventEmitter.prototype, {
+
+  screen: function(){
+    return _screen;
   },
 
   emitChange: function() {
@@ -40,13 +44,15 @@ var AuthenticationStore = assign({}, EventEmitter.prototype, {
 });
 
 // Register callback to handle all updates
-AuthenticationStore.dispatchToken = AppDispatcher.register(function(action) {
+ScreenStore.dispatchToken = AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
-  case ActionTypes.RAW_LOGIN:
-    _loggedIn = true;
-    AuthenticationStore.emitChange();
+  case ActionTypes.CHANGE_SCREEN:
+    console.log("ok seen a screen change!!");
+    console.log(action.action.screen);
+    _set_screen(action.action.screen);
+    ScreenStore.emitChange();
     break;
 
     default:
@@ -54,4 +60,4 @@ AuthenticationStore.dispatchToken = AppDispatcher.register(function(action) {
   }
 });
 
-module.exports = AuthenticationStore;
+module.exports = ScreenStore;

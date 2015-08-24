@@ -10,11 +10,11 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-var RoomcastConstants = require('../constants/RoomcastConstants');
+var AuthConstants = require('../constants/AuthConstants');
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('object-assign');
 
-var PayloadSources = RoomcastConstants.PayloadSources;
+var PayloadSources = AuthConstants.PayloadSources;
 
 var AppDispatcher = assign(new Dispatcher(), {
 

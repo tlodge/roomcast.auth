@@ -1,16 +1,27 @@
 var React = require('react');
 var $ = require('jquery');
 var extend = require('extend');
-var windowheight =  $(window).height();
-var windowwidth  =  $(window).width();
+var ScreenActionCreators = require('../actions/ScreenActionCreators');
+var ScreenStore = require('../stores/ScreenStore');
+var Login = require("./Login.react");
+
+injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
+
+function getStateFromStores() {
+  return {
+    screen: ScreenStore.screen(),
+  };
+}
 
 var Splash = React.createClass({
   
   getInitialState: function() {
-    return {width:$(window).width(), height:$(window).height()};
+    return {width:$(window).width(), height:$(window).height(), screen:"splash"};
   },
 
   componentDidMount: function() {
+   ScreenStore.addChangeListener(this._onChange);
     window.addEventListener('resize', this._resize);
     var mql = window.matchMedia('(min-width: 800px)');
     mql.addListener(this.mediaQueryChanged);
@@ -18,6 +29,7 @@ var Splash = React.createClass({
   },
 
   componentWillUnmount: function() {
+    ScreenStore.removeChangeListener(this._onChange);
     window.removeEventListener('resize', this._resize);
     this.state.removeListener(this.mediaQueryChanged);
   },
@@ -27,26 +39,58 @@ var Splash = React.createClass({
   },
 
   render: function(){
-
-    var screen;
-
     var props = {
       width:this.state.width,
-      height:this.state.height
+      height:this.state.height,
+      changeScreen: this._changeScreen,
     };
+    
+    var screen;
+    console.log("ok screen is ");
+    console.log(screen);
 
-    if (this.state.mobile) 
-        screen = <Mobile {...props}/>;
-    else
-        screen = <BigScreen {...props}/>;
+    switch (this.state.screen){
+      
+      case "splash":
+       
+        if (this.state.mobile) 
+          screen = <Mobile {...props}/>;
+        else
+          screen = <BigScreen {...props}/>;
+        break;
+      
+      case "login":
+        screen = <Login />;
+        break;
+
+      default:
+
+        if (this.state.mobile) 
+          screen = <Mobile {...props}/>;
+        else
+          screen = <BigScreen {...props}/>;
         
+        break;
 
+    }
+  
     return <div>{screen}</div>;         
+  },
+
+  _changeScreen: function(screen){
+    console.log("changing screen to " + screen);
+    ScreenActionCreators.changeScreen(screen);
   },
 
   _resize: function(){
     this.setState({width:$(window).width(), height:$(window).height()});
-  }
+  },
+
+  _onChange: function(){
+    this.setState(getStateFromStores());
+  },
+
+
 
 });
 
@@ -179,15 +223,15 @@ var BigScreen = React.createClass({
 
     return  <div>
               <div style={leftscreen}>
-                <div style={tl}>
+                <div style={tl} onTouchTap={this._registerScreen}>
                   <img style={smallimagestyle} src="../svgs/register.svg"/>
                   <div style={lhlabelbox}>register</div>
                 </div>
-                 <div style={tr}>
+                 <div style={tr} onTouchTap={this._loginScreen}>
                   <img style={smallimagestyle} src="../svgs/login.svg"/>
                   <div style={rhlabelbox}>login</div>
                 </div>
-                 <div style={b}>
+                 <div style={b} onTouchTap={this._registerBuildingScreen}>
                   <img style={largeimagestyle} src="../svgs/register_building.svg"/>
                   <div style={blabelbox}>register building</div>
               </div>
@@ -203,8 +247,23 @@ var BigScreen = React.createClass({
                 </div>
               </div>
             </div>;
+  },
 
-  }
+  _loginScreen: function(){
+      console.log("changing to login!!");
+      this.props.changeScreen("login");
+  },
+
+  _registerScreen: function(){
+      console.log("changing to register!!");
+      this.props.changeScreen("register");
+  },
+
+  _registerBuildingScreen: function(){
+      console.log("changing to register building!!");
+      this.props.changeScreen("registerbuilding");
+  },
+
 });
 
 var Mobile = React.createClass({
