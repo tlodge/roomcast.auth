@@ -5,6 +5,8 @@ var ScreenActionCreators = require('../actions/ScreenActionCreators');
 var ScreenStore = require('../stores/ScreenStore');
 var Login = require("./Login.react");
 var Register = require("./Register.react");
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
 
 injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();

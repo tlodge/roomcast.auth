@@ -68,7 +68,7 @@ var Register = React.createClass({
     };
 
     var roomcastlogin = {
-      background: 'white',
+     
       width: '100%',
       opacity: 0.9,
       padding: 10,

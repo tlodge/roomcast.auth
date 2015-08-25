@@ -2,6 +2,9 @@ var React = require('react');
 var TextField = require('./mui/text-field');
 var WebAPIUtils = require('../utils/WebAPIUtils');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
+var mui = require('material-ui');
+var TextField = mui.TextField;
+var RaisedButton = mui.RaisedButton;
 
 var Login = React.createClass({
 
@@ -21,10 +24,13 @@ var Login = React.createClass({
 
 
     var loginHeight = 276;
-    var loginWidth = 276;
+    var loginwidth = 276;
     var horizontalpadding = 10;
     var vpadding = 15;
     var hpadding  = 10;
+
+
+
    /* var loginStyle={
         position: 'absolute',
         width: loginWidth,
@@ -33,9 +39,14 @@ var Login = React.createClass({
         top:  (windowheight - loginHeight)/2
     };*/
     var toolbarheight = 74;
+    var bottomratio   = 640/100; 
+    var houseratio    = Math.floor(640/125);
+    var bottombarheight = this.props.width/bottomratio;
+    var titleheight = 40;
+    var formpadding = Math.ceil(this.props.width / houseratio);
 
     var topbar ={
-      background: '#323232',
+      background: '#445662',
       height: toolbarheight,
       color: 'white',
       lineHeight: toolbarheight + 'px',
@@ -44,36 +55,54 @@ var Login = React.createClass({
     };
 
     var loginback = {
-      background: "url(../svgs/loginback.svg) no-repeat center center fixed",
-      width: this.props.width,
-      height: this.props.height-toolbarheight,
-      backgroundSize: 'cover',
-      '-webkit-background-size':'cover',
-      '-moz-background-size':'cover',
-      '-o-background-size':'cover',
-      'background-size':'cover',
+      background: "url(../svgs/registerback.svg) no-repeat center bottom fixed",
+      height: this.props.height,
+      width: '100%',
       boxSizing: 'border-box',
-      paddingTop: hpadding,
+      /*paddingTop: hpadding,
       paddingLeft: vpadding,
-      paddingRight: vpadding,
+      paddingRight: vpadding,*/
     };
 
 
     var sociallogin = {
-      background: 'white',
+      boxSizing: 'border-box',
+      position: 'absolute',
+      top: toolbarheight,
+      background: '#e6e6e6',
+      opacity: 0.8,
       width: '100%',
-      opacity: 0.9,
-      padding: 10,
-      height: (this.props.height - toolbarheight)/2 - (hpadding*2),
+      height: (this.props.height - toolbarheight - bottombarheight)/2,
+      zIndex: 2,
     };
 
     var roomcastlogin = {
+      boxSizing: 'border-box',
       background: 'white',
+      opacity: 0.95,
       width: '100%',
-      opacity: 0.9,
-      padding: 10,
-      marginTop: hpadding,
-      height: (this.props.height - toolbarheight)/2 - (hpadding*2),
+      height: (this.props.height - toolbarheight- bottombarheight)/2,
+      position: 'absolute',
+      top: (this.props.height - toolbarheight - bottombarheight)/2 + toolbarheight,
+      zIndex: 2,
+    };
+
+    var logincontainer = {
+      boxSizing: 'border-box',
+      width: loginwidth  + 10,
+      height: (this.props.height - toolbarheight- bottombarheight)/2 - (titleheight*2),
+      position: 'absolute',
+      top: (this.props.height - toolbarheight - bottombarheight)/2 + toolbarheight + titleheight,
+      zIndex: 500,
+      left: (this.props.width - loginwidth) / 2,
+      /*background: 'white',
+      
+      opacity: 0.9,*/
+    };
+
+    var container = {
+      width: '100%',
+      height: '100%',
     };
 
     var title = {
@@ -81,6 +110,9 @@ var Login = React.createClass({
         fontSize: "120%",
         color: 'black',
         textAlign: 'center',
+        height: titleheight,
+        padding: 0,
+        lineHeight: titleheight + 'px',
     };
     /*
     <form ref="login" onSubmit={this._handleSubmit} className="loginbox"  action="/login" method="post">
@@ -95,6 +127,10 @@ var Login = React.createClass({
         </form>
       </Paper>*/
     
+
+  /*
+  */
+
     var maintitle = {
       fontSize: '250%',
     };
@@ -103,26 +139,65 @@ var Login = React.createClass({
       fontSize: '180%',
     };
 
+    var submitstyle = {
+      position: 'absolute',
+      textAlign: 'center',
+      bottom: 0,
+      left: formpadding,
+      width: this.props.width - (formpadding),
+      height: bottombarheight,
+      color: 'white',
+      lineHeight: bottombarheight + 'px',
+      fontSize: '150%',
+      zIndex: 30,
+    };
+
     var left={float:left, color: 'white'};
     var right={float:right, color: 'white'};
+    var imagestyle={position:'absolute', bottom:0, width: '100%', zIndex: 20};
 
 		return(
-      <div>
+      <div style={loginback}>
+         <div>
+          <img  style={imagestyle} src="../svgs/bottombar.svg"/>
+        </div>
+
         <div className='clearfix' style={topbar}>
             <a style={maintitle} className='left'>login</a>
             <a onTouchTap={this._handleBack} style={back} className='right'>back</a>
         </div>
-  			<div style={loginback}>
-          <div style={sociallogin}>
-            <div style={title}>login with <strong>facebook</strong> or <strong>google</strong></div>
+        <div style={sociallogin}>
+            <div style={container}>
+              <div style={title}>login with <strong>facebook</strong> or <strong>google</strong></div>
+            </div>
           </div>
           <div style={roomcastlogin}>
-            <div style={title}>login with your <strong>roomcast</strong> account </div>
+            <div style={container}>
+                <div style={title}>login with your <strong>roomcast</strong> account </div>
+            </div>
           </div>
-        </div>
+          <div style={logincontainer}>
+            <form ref="login" className="loginbox"  action="/login" method="post">
+              <div className="loginform">
+                <LoginUserName errorText={this.state.usernameerror} username={this.state.username} handleUpdate={this._handleUserNameUpdate} />
+                <LoginPassword errorText={this.state.passworderror} password={this.state.password} handleUpdate={this._handlePasswordUpdate}/>
+              </div>    
+              
+            </form>
+
+          </div>
+           <div onTouchTap={this._handleSubmit} style={submitstyle}>
+                 submit!
+            </div>  
+          
       </div>
 		);
 	},
+
+  _submit: function(){
+    console.log("seen submit");
+    
+  },
 
   _handlePasswordUpdate: function(password){
     if (password !== ""){
@@ -140,14 +215,21 @@ var Login = React.createClass({
     console.log(username);
   },
 
-  _handleSubmit: function(e){
+  _handleSubmit: function(){
+  
+    var valid = true;
     if (this.state.username === ""){
       this.setState({usernameerror:"please provide your username"});
-      e.preventDefault();
+      valid = false;
     }
-    if (this.state.username === ""){
+    
+    if (this.state.password === ""){
       this.setState({passworderror:"please provide your password!"});
-      e.preventDefault();
+      valid = false;
+    }
+
+    if (valid){
+      React.findDOMNode(this.refs.login).submit();
     }
   },
 
