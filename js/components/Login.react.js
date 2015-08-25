@@ -44,6 +44,11 @@ var Login = React.createClass({
     var bottombarheight = this.props.width/bottomratio;
     var titleheight = 40;
     var formpadding = Math.ceil(this.props.width / houseratio);
+    var textinputheight = 37;
+    var textinputmargin = 16;
+
+    var containerheight = (this.props.height - toolbarheight- bottombarheight)/2;
+    var formheight = (textinputheight * 2) + textinputmargin;
 
     var topbar ={
       background: '#445662',
@@ -72,32 +77,30 @@ var Login = React.createClass({
       background: '#e6e6e6',
       opacity: 0.8,
       width: '100%',
-      height: (this.props.height - toolbarheight - bottombarheight)/2,
+      height: containerheight,
       zIndex: 2,
     };
+
+    
 
     var roomcastlogin = {
       boxSizing: 'border-box',
       background: 'white',
       opacity: 0.95,
       width: '100%',
-      height: (this.props.height - toolbarheight- bottombarheight)/2,
+      height: containerheight,
       position: 'absolute',
-      top: (this.props.height - toolbarheight - bottombarheight)/2 + toolbarheight,
+      top: containerheight + toolbarheight,
       zIndex: 2,
     };
 
     var logincontainer = {
       boxSizing: 'border-box',
       width: loginwidth  + 10,
-      height: (this.props.height - toolbarheight- bottombarheight)/2 - (titleheight*2),
       position: 'absolute',
-      top: (this.props.height - toolbarheight - bottombarheight)/2 + toolbarheight + titleheight,
+      top:  (containerheight+toolbarheight+titleheight) + (containerheight-titleheight-formheight)/2,
       zIndex: 500,
       left: (this.props.width - loginwidth) / 2,
-      /*background: 'white',
-      
-      opacity: 0.9,*/
     };
 
     var container = {
