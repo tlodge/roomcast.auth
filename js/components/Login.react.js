@@ -81,6 +81,14 @@ var Login = React.createClass({
       zIndex: 2,
     };
 
+     var socialcontainer = {
+      boxSizing: 'border-box',
+      width: loginwidth  + 10,
+      position: 'absolute',
+      top:  (toolbarheight+titleheight),
+      zIndex: 500,
+      left: (this.props.width - loginwidth) / 2,
+    };
     
 
     var roomcastlogin = {
@@ -179,6 +187,11 @@ var Login = React.createClass({
                 <div style={title}>login with your <strong>roomcast</strong> account </div>
             </div>
           </div>
+
+          <div style={socialcontainer}>
+               <img src="../img/google.png"/>
+          </div>
+
           <div style={logincontainer}>
             <form ref="login" action="/login" method="post">
               <div>
