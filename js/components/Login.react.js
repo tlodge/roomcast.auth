@@ -177,8 +177,8 @@ var Login = React.createClass({
             </div>
           </div>
           <div style={logincontainer}>
-            <form ref="login" className="loginbox"  action="/login" method="post">
-              <div className="loginform">
+            <form ref="login" action="/login" method="post">
+              <div>
                 <LoginUserName errorText={this.state.usernameerror} username={this.state.username} handleUpdate={this._handleUserNameUpdate} />
                 <LoginPassword errorText={this.state.passworderror} password={this.state.password} handleUpdate={this._handlePasswordUpdate}/>
               </div>    
