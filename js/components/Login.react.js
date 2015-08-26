@@ -33,10 +33,8 @@ var Login = React.createClass({
     var formheight      = (textinputheight * 2) + textinputmargin;
     var housewidth      = (toolbarheight / shadowratio) * houseaspect;
 
-    console.log("container height is");
-    console.log(containerheight);
     var topbar ={
-      background: '#445662',
+      background: 'rgb(91,91,91)',
       height: toolbarheight,
       color: 'white',
       lineHeight: toolbarheight + 'px',
@@ -54,10 +52,9 @@ var Login = React.createClass({
 
 
     var loginback = {
-      background: "url(../svgs/registerback.svg) no-repeat center bottom fixed",
+      background: "url(../svgs/registerback.svg) no-repeat left bottom",
       height: this.props.height,
-      width: '100%',
-      boxSizing: 'border-box',
+      width: this.props.width,
     };
 
     var sociallogin = {
@@ -66,7 +63,7 @@ var Login = React.createClass({
       top: toolbarheight,
       background: '#e6e6e6',
       opacity: 0.8,
-      width: '100%',
+      width: this.props.width,
       height: containerheight,
       zIndex: 2,
     };
@@ -75,7 +72,7 @@ var Login = React.createClass({
       boxSizing: 'border-box',
       background: 'white',
       opacity: 0.95,
-      width: '100%',
+      width: this.props.width,
       height: containerheight,
       position: 'absolute',
       top: containerheight + toolbarheight,
@@ -93,7 +90,7 @@ var Login = React.createClass({
 
     var socialcontainer = {
       boxSizing: 'border-box',
-      width: '100%',
+      width: this.props.width,
       height: containerheight - titleheight,
       position: 'absolute',
       top: titleheight + toolbarheight,
@@ -106,7 +103,7 @@ var Login = React.createClass({
     };
 
     var title = {
-        width : "100%",
+        width : this.props.width,
         fontSize: "120%",
         color: 'black',
         textAlign: 'center',
