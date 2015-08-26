@@ -22,53 +22,41 @@ var Login = React.createClass({
 
 	render: function(){
 
-
-    var loginHeight = 276;
-    var loginwidth = 276;
-    var horizontalpadding = 10;
-    var vpadding = 15;
-    var hpadding  = 10;
-
-
-
-   /* var loginStyle={
-        position: 'absolute',
-        width: loginWidth,
-        height: loginHeight,
-        left: (windowwidth - loginWidth)/2,
-        top:  (windowheight - loginHeight)/2
-    };*/
-    var toolbarheight = 74;
-    var bottomratio   = 640/100; 
-    var houseratio    = Math.floor(640/125);
-    var bottombarheight = this.props.width/bottomratio;
-    var titleheight = 40;
-    var formpadding = Math.ceil(this.props.width / houseratio);
+    var toolbarheight   = 74;
+    var loginwidth      = 276;
+    var titleheight     = 40;
     var textinputheight = 37;
     var textinputmargin = 16;
-
-    var containerheight = (this.props.height - toolbarheight- bottombarheight)/2;
-    var formheight = (textinputheight * 2) + textinputmargin;
+    var houseaspect     = 200/240;
+    var shadowratio     = 100/240;
+    var containerheight = Math.max(200, (this.props.height - toolbarheight- toolbarheight)/2);
+    var formheight      = (textinputheight * 2) + textinputmargin;
+    var housewidth      = (toolbarheight / shadowratio) * houseaspect;
 
     var topbar ={
       background: '#445662',
       height: toolbarheight,
       color: 'white',
       lineHeight: toolbarheight + 'px',
-      paddingLeft: 10,
-      paddingRight: 10,
+      paddingLeft: 15,
+      paddingRight: 15,
     };
+
+     var maintitle = {
+      fontSize: '150%',
+    };
+    
+    var back = {
+      fontSize: '120%',
+    };
+
 
     var loginback = {
       background: "url(../svgs/registerback.svg) no-repeat center bottom fixed",
       height: this.props.height,
       width: '100%',
       boxSizing: 'border-box',
-      /*paddingTop: hpadding,
-      paddingLeft: vpadding,
-      paddingRight: vpadding,*/
     };
-
 
     var sociallogin = {
       boxSizing: 'border-box',
@@ -80,16 +68,6 @@ var Login = React.createClass({
       height: containerheight,
       zIndex: 2,
     };
-
-     var socialcontainer = {
-      boxSizing: 'border-box',
-      width: loginwidth  + 10,
-      position: 'absolute',
-      top:  (toolbarheight+titleheight),
-      zIndex: 500,
-      left: (this.props.width - loginwidth) / 2,
-    };
-    
 
     var roomcastlogin = {
       boxSizing: 'border-box',
@@ -111,6 +89,15 @@ var Login = React.createClass({
       left: (this.props.width - loginwidth) / 2,
     };
 
+    var socialcontainer = {
+      boxSizing: 'border-box',
+      width: '100%',
+      height: containerheight - titleheight,
+      position: 'absolute',
+      top: titleheight + toolbarheight,
+      zIndex: 500,
+    };
+
     var container = {
       width: '100%',
       height: '100%',
@@ -125,77 +112,68 @@ var Login = React.createClass({
         padding: 0,
         lineHeight: titleheight + 'px',
     };
-    /*
-    <form ref="login" onSubmit={this._handleSubmit} className="loginbox"  action="/login" method="post">
-          <div className="logintitle"> <strong> roomcast </strong>login </div>
-          <div className="loginform">
-            <LoginUserName errorText={this.state.usernameerror} username={this.state.username} handleUpdate={this._handleUserNameUpdate} />
-            <LoginPassword errorText={this.state.passworderror} password={this.state.password} handleUpdate={this._handlePasswordUpdate}/>
-          </div>
-          <div className="loginsubmitfooter">
-            <RaisedButton primary={true} label="login"/>
-          </div>
-        </form>
-      </Paper>*/
-    
-
-  /*
-  */
-
-    var maintitle = {
-      fontSize: '150%',
-    };
-    
-    var back = {
-      fontSize: '120%',
-    };
+  
+   
 
     var submitstyle = {
       position: 'absolute',
       textAlign: 'center',
       bottom: 0,
-      left: formpadding,
-      width: this.props.width - (formpadding),
-      height: bottombarheight,
+      left:  (housewidth  * 120/200),
+      width: this.props.width - (housewidth  * 120/200),
+      height: toolbarheight,
+      minHeight: toolbarheight,
       color: 'white',
-      lineHeight: bottombarheight + 'px',
+      lineHeight: toolbarheight + 'px',
       fontSize: '150%',
       zIndex: 30,
     };
-
-    var left={float:left, color: 'white'};
-    var right={float:right, color: 'white'};
-    var imagestyle={position:'absolute', bottom:0, width: '100%', zIndex: 20};
-    
+ 
     var google={
         position: 'absolute',
-        top: titleheight,
         width: this.props.width/2,
-        height: containerheight - titleheight,
-        padding: 20,
+        height: "100%",
+        padding: 40,
     };
 
     var facebook={
         position: 'absolute',
-        top: titleheight,
         left: this.props.width/2,
         width: this.props.width/2,
-        height: containerheight - titleheight,
-        padding: 20,
+        height: "100%",
+        padding: 40,
     };
 
     var socialimgstyle ={
-        display: 'block',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+      display: 'block',
+      marginLeft: 'auto',
+      marginRight: 'auto',
       width: (this.props.width / 2) > (containerheight - titleheight) ? 'auto' : "100%",
       height: (this.props.width / 2) > (containerheight - titleheight) ? '100%' : "auto%"
+    };
+
+    var imagestyle={
+      position:'absolute', 
+      bottom:0, 
+      width: housewidth, 
+      zIndex: 20
+    };
+
+    var submitbar ={
+      position: 'absolute',
+      bottom: 0,
+      left: housewidth  * 120/200,
+      height: toolbarheight,
+      width: this.props.width - (housewidth  * 120/200),
+      background: "#d35a51",
+      color: 'white',
     };
 
 		return(
       <div style={loginback}>
          <div>
-          <img  style={imagestyle} src="../svgs/bottombar.svg"/>
+          <img  style={imagestyle} src="../svgs/house.svg"/>
+          <div style={submitbar}></div>
         </div>
 
         <div className='clearfix' style={topbar}>
@@ -205,12 +183,6 @@ var Login = React.createClass({
         <div style={sociallogin}>
             <div style={container}>
               <div style={title}>login with <strong>facebook</strong> or <strong>google</strong></div>
-               <div style={google}>
-                  <img style={socialimgstyle} src="../svgs/social/google.svg"/>
-                </div>
-                <div style={facebook}>
-                  <img style={socialimgstyle} src="../svgs/social/facebook.svg"/>
-                </div>
             </div>
           </div>
           <div style={roomcastlogin}>
@@ -218,6 +190,16 @@ var Login = React.createClass({
                 <div style={title}>login with your <strong>roomcast</strong> account </div>
             </div>
           </div>
+
+          <div style={socialcontainer}>
+            <div style={google}>
+              <img style={socialimgstyle} src="../svgs/social/google.svg"/>
+            </div>
+            <div style={facebook}>
+              <img style={socialimgstyle} src="../svgs/social/facebook.svg"/>
+            </div>
+          </div>
+
           <div style={logincontainer}>
             <form ref="login" action="/login" method="post">
               <div>
@@ -226,20 +208,13 @@ var Login = React.createClass({
               </div>    
               
             </form>
-
           </div>
-           <div onTouchTap={this._handleSubmit} style={submitstyle}>
-                 submit!
-            </div>  
-          
+          <div onTouchTap={this._handleSubmit} style={submitstyle}>
+                submit!
+          </div>  
       </div>
 		);
 	},
-
-  _submit: function(){
-    console.log("seen submit");
-    
-  },
 
   _handlePasswordUpdate: function(password){
     if (password !== ""){
@@ -320,7 +295,7 @@ var LoginUserName = React.createClass({
 var LoginPassword = React.createClass({
 
   render: function(){
-    return <input type="text" errorText={this.props.errorText} name="password" floatingLabelText="your password" placeholder="password"/>;
+    return <input type="password" errorText={this.props.errorText} name="password" floatingLabelText="your password" placeholder="password"/>;
   }
 
 });
