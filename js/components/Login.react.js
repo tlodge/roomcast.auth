@@ -22,7 +22,7 @@ var Login = React.createClass({
 
 	render: function(){
 
-    var toolbarheight   = 74;
+    var toolbarheight   = 54;
     var loginwidth      = 276;
     var titleheight     = 40;
     var textinputheight = 37;
@@ -135,7 +135,7 @@ var Login = React.createClass({
         position: 'absolute',
         width: this.props.width/2,
         height: "100%",
-        padding: this.props.width / 20,
+        padding: this.props.width / 10,
     };
 
     var facebook={
@@ -143,7 +143,7 @@ var Login = React.createClass({
         left: this.props.width/2,
         width: this.props.width/2,
         height: "100%",
-        padding: this.props.width / 20,
+        padding: this.props.width / 10,
     };
 
     var socialimgstyle ={
