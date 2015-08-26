@@ -29,10 +29,12 @@ var Login = React.createClass({
     var textinputmargin = 16;
     var houseaspect     = 200/240;
     var shadowratio     = 100/240;
-    var containerheight = Math.max(200, (this.props.height - toolbarheight- toolbarheight)/2);
+    var containerheight = Math.max(120, (this.props.height - toolbarheight- toolbarheight)/2);
     var formheight      = (textinputheight * 2) + textinputmargin;
     var housewidth      = (toolbarheight / shadowratio) * houseaspect;
 
+    console.log("container height is");
+    console.log(containerheight);
     var topbar ={
       background: '#445662',
       height: toolbarheight,
@@ -133,7 +135,7 @@ var Login = React.createClass({
         position: 'absolute',
         width: this.props.width/2,
         height: "100%",
-        padding: 40,
+        padding: this.props.width / 20,
     };
 
     var facebook={
@@ -141,7 +143,7 @@ var Login = React.createClass({
         left: this.props.width/2,
         width: this.props.width/2,
         height: "100%",
-        padding: 40,
+        padding: this.props.width / 20,
     };
 
     var socialimgstyle ={
