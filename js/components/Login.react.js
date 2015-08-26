@@ -143,11 +143,11 @@ var Login = React.createClass({
   */
 
     var maintitle = {
-      fontSize: '250%',
+      fontSize: '150%',
     };
     
     var back = {
-      fontSize: '180%',
+      fontSize: '120%',
     };
 
     var submitstyle = {
@@ -166,6 +166,31 @@ var Login = React.createClass({
     var left={float:left, color: 'white'};
     var right={float:right, color: 'white'};
     var imagestyle={position:'absolute', bottom:0, width: '100%', zIndex: 20};
+    
+    var google={
+        position: 'absolute',
+        top: titleheight,
+        width: this.props.width/2,
+        height: containerheight - titleheight,
+        padding: 20,
+    };
+
+    var facebook={
+        position: 'absolute',
+        top: titleheight,
+        left: this.props.width/2,
+        width: this.props.width/2,
+        height: containerheight - titleheight,
+        padding: 20,
+    };
+
+    var socialimgstyle ={
+        display: 'block',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      width: (this.props.width / 2) > (containerheight - titleheight) ? 'auto' : "100%",
+      height: (this.props.width / 2) > (containerheight - titleheight) ? '100%' : "auto%"
+    };
 
 		return(
       <div style={loginback}>
@@ -180,6 +205,12 @@ var Login = React.createClass({
         <div style={sociallogin}>
             <div style={container}>
               <div style={title}>login with <strong>facebook</strong> or <strong>google</strong></div>
+               <div style={google}>
+                  <img style={socialimgstyle} src="../svgs/social/google.svg"/>
+                </div>
+                <div style={facebook}>
+                  <img style={socialimgstyle} src="../svgs/social/facebook.svg"/>
+                </div>
             </div>
           </div>
           <div style={roomcastlogin}>
@@ -187,11 +218,6 @@ var Login = React.createClass({
                 <div style={title}>login with your <strong>roomcast</strong> account </div>
             </div>
           </div>
-
-          <div style={socialcontainer}>
-               <img src="../img/google.png"/>
-          </div>
-
           <div style={logincontainer}>
             <form ref="login" action="/login" method="post">
               <div>
