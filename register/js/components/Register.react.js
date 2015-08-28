@@ -1,5 +1,4 @@
 var React = require('react');
-var TextField = require('./mui/text-field');
 var WebAPIUtils = require('../utils/WebAPIUtils');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
 
@@ -43,11 +42,7 @@ var Register = React.createClass({
       fontSize: '150%',
     };
     
-    var back = {
-      fontSize: '120%',
-    };
-
-
+   
     var loginback = {
       background: "url(../svgs/registerback.svg) no-repeat left bottom",
       height: this.props.height,
@@ -173,41 +168,12 @@ var Register = React.createClass({
         </div>
 
         <div className='clearfix' style={topbar}>
-            <a style={maintitle} className='left'>register</a>
-            <a onTouchTap={this._handleBack} style={back} className='right'>back</a>
+            <a style={maintitle} className='left'>register!</a>
         </div>
-        <div style={sociallogin}>
-            <div style={container}>
-              <div style={title}>link to your <strong>facebook</strong> or <strong>google</strong>account</div>
-            </div>
-          </div>
-          <div style={roomcastlogin}>
-            <div style={container}>
-                <div style={title}>or create a new <strong>roomcast</strong> account </div>
-            </div>
-          </div>
-
-          <div style={socialcontainer}>
-            <div onTouchTap={this._registergoogle} style={google}>
-              <img style={socialimgstyle} src="../svgs/social/google.svg"/>
-            </div>
-            <div style={facebook}>
-              <img style={socialimgstyle} src="../svgs/social/facebook.svg"/>
-            </div>
-          </div>
-
-          <div style={logincontainer}>
-            <form ref="login" action="/login" method="post">
-              <div>
-                <LoginUserName errorText={this.state.usernameerror} username={this.state.username} handleUpdate={this._handleUserNameUpdate} />
-                <LoginPassword errorText={this.state.passworderror} password={this.state.password} handleUpdate={this._handlePasswordUpdate}/>
-              </div>    
-              
-            </form>
-          </div>
-          <div onTouchTap={this._handleSubmit} style={submitstyle}>
-                register
-          </div>  
+       
+        <div onTouchTap={this._handleSubmit} style={submitstyle}>
+            next
+        </div>  
       </div>
     );
   },
@@ -225,6 +191,7 @@ var Register = React.createClass({
       this.setState({usernameerror:""});
     }
     this.setState({username:username});
+    console.log(username);
   },
 
   _handleSubmit: function(){

@@ -3,7 +3,6 @@ var $ = require('jquery');
 var extend = require('extend');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
 var ScreenStore = require('../stores/ScreenStore');
-var Login = require("./Login.react");
 var Register = require("./Register.react");
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
@@ -61,26 +60,9 @@ var Splash = React.createClass({
 
     switch (this.state.screen){
         
-      case "login":
-
-        lhscreen = <Login {...lhprops} />;
-        
-        if (!this.state.mobile){
-          rhscreen = <About {...rhprops}/>;
-        }
-        break;
-
-      case "register":
-        lhscreen = <Register {...lhprops} />;
-        
-        if (!this.state.mobile){
-           rhscreen = <About {...rhprops}/>;
-        }
-        break;
-
       default:
        
-        lhscreen = <Options {...lhprops} />;
+        lhscreen = <Register {...lhprops} />;
         
         if (!this.state.mobile){
            rhscreen = <About {...rhprops}/>;

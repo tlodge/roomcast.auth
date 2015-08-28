@@ -1,5 +1,4 @@
 var React = require('react');
-var TextField = require('./mui/text-field');
 var WebAPIUtils = require('../utils/WebAPIUtils');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
 
@@ -173,24 +172,25 @@ var Login = React.createClass({
         </div>
 
         <div className='clearfix' style={topbar}>
-            <a style={maintitle} className='left'>login</a>
+            <a style={maintitle} className='left'> {this.props.action}</a>
             <a onTouchTap={this._handleBack} style={back} className='right'>back</a>
         </div>
         <div style={sociallogin}>
             <div style={container}>
-              <div style={title}>login with <strong>facebook</strong> or <strong>google</strong></div>
+              <div style={title} dangerouslySetInnerHTML={{__html:this.props.socialtitle}}></div>
             </div>
           </div>
+          
           <div style={roomcastlogin}>
             <div style={container}>
-                <div style={title}>login with your <strong>roomcast</strong> account </div>
+                <div style={title} dangerouslySetInnerHTML={{__html:this.props.roomcasttitle}}></div>
             </div>
           </div>
 
           <div style={socialcontainer}>
-            <div style={google}>
+            <a href="/auth/google" style={google}>
               <img style={socialimgstyle} src="../svgs/social/google.svg"/>
-            </div>
+            </a>
             <div style={facebook}>
               <img style={socialimgstyle} src="../svgs/social/facebook.svg"/>
             </div>
@@ -206,7 +206,7 @@ var Login = React.createClass({
             </form>
           </div>
           <div onTouchTap={this._handleSubmit} style={submitstyle}>
-                login
+                {this.props.action}
           </div>  
       </div>
 		);

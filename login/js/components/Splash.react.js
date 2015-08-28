@@ -4,9 +4,6 @@ var extend = require('extend');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
 var ScreenStore = require('../stores/ScreenStore');
 var Login = require("./Login.react");
-var Register = require("./Register.react");
-var mui = require('material-ui');
-var ThemeManager = new mui.Styles.ThemeManager();
 
 injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
@@ -57,13 +54,25 @@ var Splash = React.createClass({
        left: this.state.width / 2,
     };
 
+    var registerprops = {
+        socialtitle : "link with <strong>facebook</strong> or <strong>google</strong>",
+        roomcasttitle : "create a new <strong>roomcast</strong> account",
+        action: 'register',
+    };
+
+    var loginprops = {
+        socialtitle : "login with <strong>facebook</strong> or <strong>google</strong>",
+        roomcasttitle : "login with your <strong>roomcast</strong> account",
+        action: 'login',
+    };
+
     var lhscreen, rhscreen;
 
     switch (this.state.screen){
         
       case "login":
 
-        lhscreen = <Login {...lhprops} />;
+        lhscreen = <Login {...extend(loginprops,lhprops)} />;
         
         if (!this.state.mobile){
           rhscreen = <About {...rhprops}/>;
@@ -71,7 +80,7 @@ var Splash = React.createClass({
         break;
 
       case "register":
-        lhscreen = <Register {...lhprops} />;
+        lhscreen = <Login {...extend(registerprops,lhprops)} />;
         
         if (!this.state.mobile){
            rhscreen = <About {...rhprops}/>;
