@@ -51,5 +51,5 @@ App.childContextTypes = {
 };
 
 React.render(
-	<App />, document.getElementById('login')
+	<App />, document.getElementById('register')
 );
