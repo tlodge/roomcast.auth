@@ -44,9 +44,10 @@ var Register = React.createClass({
     
    
     var loginback = {
-      background: "url(../svgs/registerback.svg) no-repeat left bottom",
+      background: "url(../svgs/registerback.svg) no-repeat center bottom",
       height: this.props.height,
       width: this.props.width,
+      opacity: 0.5,
     };
 
     var sociallogin = {
