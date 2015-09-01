@@ -125,6 +125,37 @@ var Register = React.createClass({
       color: "rgb(91, 91, 91)"
     };
 
+    /*var constrained ={
+      maxHeight: '80px',
+      height: '80px',
+      width: '100%',
+       overflowX: 'auto',
+       overflowY: 'hidden',
+    };
+
+    var unconstrained ={
+      height: '100%',
+      width: '2000%',
+    };*/
+
+    var constrained ={
+      maxHeight: '80',
+      width: '100%',
+      overflowX: 'auto',
+      overflowY: 'hidden',
+      whiteSpace: 'nowrap',
+    };
+
+    var unconstrained ={
+      height: '100%',
+      /*width: '2000%',*/
+      whiteSpace: 'nowrap',
+    };
+
+    var listyle={
+      display: 'inline-block'
+    };
+
     return(
       <div>
         <div style={loginback}>
@@ -142,31 +173,24 @@ var Register = React.createClass({
         </div>
 
         <div style={loginoverlay}></div>
-        
         <div style={logincontent}>
+
               <form>
                 <div className="row">
                   <div className="large-12 columns">
-                    <label style={labelstyle}>Your development's <strong>code</strong>
-                      <div className="row">
-                        <div className="large-6 columns">
-                          <input type="text" placeholder="development code"/>
-                        </div>
-                      </div>
-                    </label>
+                   <input type="text" placeholder="development code"/>
                   </div>
                 </div>
-
                 <div className="row">
                   <div className="large-12 columns">
                     <label style={labelstyle}>Your <strong>block</strong>
-                      <div className="large-12 columns">
+                      <div className="large-12 columns" style={constrained}>
                         <ul className="button-group">
-                          <li><div className="button small">left</div></li>
-                          <li><div className="button small">right</div></li>
-                          <li><div className="button small">up</div></li>
-                          <li><div className="button small">chart house</div></li>
-                          <li><div className="button small">langbourne</div></li>
+                          <li style={listyle}><div className="button tiny">left</div></li>
+                          <li style={listyle}><div className="button tiny">right</div></li>
+                          <li style={listyle}><div className="button tiny">up</div></li>
+                          <li style={listyle}><div className="button tiny">chart house</div></li>
+                          <li style={listyle}><div className="button tiny">langbourne</div></li>
                         </ul>
                       </div>
                     </label>
@@ -178,7 +202,7 @@ var Register = React.createClass({
                               <input type="text"/>
                             </div>
                             <div className="large-5 columns">
-                              <a className="button postfix">add</a>
+                              <a className="button tiny postfix">add</a>
                             </div>
                           </div>
                         </div>
