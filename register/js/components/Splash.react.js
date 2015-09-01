@@ -2,7 +2,7 @@ var React = require('react');
 var $ = require('jquery');
 var extend = require('extend');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
-var ScreenStore = require('../stores/ScreenStore');
+var RegisterScreenStore = require('../stores/RegisterScreenStore');
 var Register = require("./Register.react");
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
@@ -12,7 +12,7 @@ injectTapEventPlugin();
 
 function getStateFromStores() {
   return {
-    screen: ScreenStore.screen(),
+    screen: RegisterScreenStore.screen(),
   };
 }
 
@@ -23,7 +23,7 @@ var Splash = React.createClass({
   },
 
   componentDidMount: function() {
-    ScreenStore.addChangeListener(this._onChange);
+    RegisterScreenStore.addChangeListener(this._onChange);
     window.addEventListener('resize', this._resize);
     var mql = window.matchMedia('(min-width: 800px)');
     mql.addListener(this.mediaQueryChanged);
@@ -31,7 +31,7 @@ var Splash = React.createClass({
   },
 
   componentWillUnmount: function() {
-    ScreenStore.removeChangeListener(this._onChange);
+    RegisterScreenStore.removeChangeListener(this._onChange);
     window.removeEventListener('resize', this._resize);
     this.state.removeListener(this.mediaQueryChanged);
   },

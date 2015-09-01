@@ -1,23 +1,52 @@
 var React = require('react');
 var WebAPIUtils = require('../utils/WebAPIUtils');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
+var RegisterScreenStore = require('../stores/RegisterScreenStore');
+
+function getStateFromStores() {
+  return {
+    screen: RegisterScreenStore.screen(),
+  };
+}
 
 var Register = React.createClass({
 
   getInitialState: function() {
-    return {username:"", password:"", usernameerror:"", passworderror:""};
+    return getStateFromStores();
   },
 
   componentDidMount: function() {
-
+     RegisterScreenStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
-
+    RegisterScreenStore.removeChangeListener(this._onChange);
   },
 
   render: function(){
 
+
+    var content;
+    console.log("screen is");
+    console.log(this.state.screen);
+
+    switch(this.state.screen){
+      case "location":
+        content = <Location/>;
+        break;
+
+      case "occupancy":
+        content = <Occupancy/>;
+        break;
+
+      case "contacts":
+        content = <Contacts/>;
+        break;
+
+      default:
+        //no op
+    }
+    
     var toolbarheight   = 54;
     var loginwidth      = 276;
     var titleheight     = 40;
@@ -41,15 +70,14 @@ var Register = React.createClass({
      var maintitle = {
       fontSize: '150%',
     };
-    
    
-    var loginback = {
+    var background = {
       background: "url(../svgs/registerback.svg) no-repeat center bottom",
       height: this.props.height,
       width: this.props.width,
     };
 
-    var loginoverlay = {
+    var overlay = {
       boxSizing: 'border-box',
       position: 'absolute',
       top: toolbarheight,
@@ -60,14 +88,14 @@ var Register = React.createClass({
       zIndex: 2,
     };
 
-     var logincontent = {
+     var maincontent = {
       boxSizing: 'border-box',
       position: 'absolute',
       top: toolbarheight,
       width: this.props.width,
       height: this.props.height - (2 * toolbarheight),
       padding: 10,
-      zIndex: 2,
+      zIndex: 31,
     };
 
     var title = {
@@ -117,26 +145,54 @@ var Register = React.createClass({
       padding: 7,
     };
 
-    var labelstyle = {
-      fontSize: '110%'
-    };
+    return(
+      <div>
+        <div style={background}>
+          <div>
+            <img  style={imagestyle} src="../svgs/house.svg"/>
+            <div style={submitbar}></div>
+          </div>
+           <div className='clearfix' style={topbar}>
+              <a style={maintitle} className='left'>register!</a>
+          </div>
+         
+          <div onTouchTap={this._handleNext} style={submitstyle}>
+              next
+          </div>  
+        </div>
+
+        <div style={overlay}></div>
+        <div style={maincontent}>
+            {content}
+        </div>
+      </div>
+    );
+  },
+
+  _handleNext: function(){
+    ScreenActionCreators.nextScreen();
+  },
+
+  _handleBack: function(){
+    ScreenActionCreators.previousScreen();
+  },
+  /**
+   * Event handler for 'change' events coming from the stores
+   */
+  _onChange: function() {
+    this.setState(getStateFromStores());
+  }
+});
+
+
+
+var Location = React.createClass({
+
+  render: function(){
 
     var addmore ={
       color: "rgb(91, 91, 91)"
     };
-
-    /*var constrained ={
-      maxHeight: '80px',
-      height: '80px',
-      width: '100%',
-       overflowX: 'auto',
-       overflowY: 'hidden',
-    };
-
-    var unconstrained ={
-      height: '100%',
-      width: '2000%',
-    };*/
 
     var constrained ={
       maxHeight: '80',
@@ -146,118 +202,60 @@ var Register = React.createClass({
       whiteSpace: 'nowrap',
     };
 
-    var unconstrained ={
-      height: '100%',
-      /*width: '2000%',*/
-      whiteSpace: 'nowrap',
-    };
-
     var listyle={
       display: 'inline-block'
     };
 
-    return(
-      <div>
-        <div style={loginback}>
-          <div>
-            <img  style={imagestyle} src="../svgs/house.svg"/>
-            <div style={submitbar}></div>
+    return (
+
+        <form>
+        <div className="row">
+          <div className="large-12 columns">
+           <input type="text" placeholder="development code"/>
           </div>
-           <div className='clearfix' style={topbar}>
-              <a style={maintitle} className='left'>register!</a>
+        </div>
+        <div className="row">
+          <div className="large-12 columns">
+            <label>your block
+              <div className="large-12 columns" style={constrained}>
+                <ul className="button-group">
+                  <li style={listyle}><div className="button tiny">left</div></li>
+                  <li style={listyle}><div className="button tiny">right</div></li>
+                  <li style={listyle}><div className="button tiny">up</div></li>
+                  <li style={listyle}><div className="button tiny">chart house</div></li>
+                  <li style={listyle}><div className="button tiny">langbourne</div></li>
+                </ul>
+              </div>
+            </label>
+            <label> your apartment number
+              <div className="row">
+                <div className="small-4 large-2 columns">
+                  <input type="text"/>
+                </div>
+              </div>
+            </label>
           </div>
-         
-          <div onTouchTap={this._handleSubmit} style={submitstyle}>
-              next
-          </div>  
         </div>
 
-        <div style={loginoverlay}></div>
-        <div style={logincontent}>
-
-              <form>
-                <div className="row">
-                  <div className="large-12 columns">
-                   <input type="text" placeholder="development code"/>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="large-12 columns">
-                    <label style={labelstyle}>Your <strong>block</strong>
-                      <div className="large-12 columns" style={constrained}>
-                        <ul className="button-group">
-                          <li style={listyle}><div className="button tiny">left</div></li>
-                          <li style={listyle}><div className="button tiny">right</div></li>
-                          <li style={listyle}><div className="button tiny">up</div></li>
-                          <li style={listyle}><div className="button tiny">chart house</div></li>
-                          <li style={listyle}><div className="button tiny">langbourne</div></li>
-                        </ul>
-                      </div>
-                    </label>
-                    <label style={labelstyle}>Your <strong>apartment</strong> number
-                      <div className="row">
-                        <div className="small-4 large-2 columns">
-                          <input type="text"/>
-                        </div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="large-12 columns clearfix">
-                    <a className="right" style={addmore} href="#">add another</a>
-                  </div>
-                </div>
-              </form>
+        <div className="row">
+          <div className="large-12 columns">
+            <a style={addmore} href="#">add more</a>
+          </div>
         </div>
-      </div>
-    );
-  },
+      </form>);
+  }
+});
 
-  _handlePasswordUpdate: function(password){
-    if (password !== ""){
-      this.setState({passworderror:""});
-    }
-    this.setState({password:password});
-    console.log(password);
-  },
 
-  _handleUserNameUpdate: function(username){
-    if (username !== ""){
-      this.setState({usernameerror:""});
-    }
-    this.setState({username:username});
-    console.log(username);
-  },
+var Occupancy = React.createClass({
+  render: function(){
+    return <h1> Occupancy </h1>;
+  }
+});
 
-  _handleSubmit: function(){
-  
-    var valid = true;
-    if (this.state.username === ""){
-      this.setState({usernameerror:"please provide your username"});
-      valid = false;
-    }
-    
-    if (this.state.password === ""){
-      this.setState({passworderror:"please provide your password!"});
-      valid = false;
-    }
-
-    if (valid){
-      React.findDOMNode(this.refs.login).submit();
-    }
-  },
-
-  _handleBack: function(){
-    ScreenActionCreators.changeScreen("splash");
-  },
-
-  /**
-   * Event handler for 'change' events coming from the stores
-   */
-  _onChange: function() {
-    this.setState(getStateFromStores());
+var Contacts = React.createClass({
+  render: function(){
+    return <h1> Contacts </h1>;
   }
 });
 

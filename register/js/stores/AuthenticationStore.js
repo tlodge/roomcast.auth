@@ -7,11 +7,11 @@
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
-var AuthConstants = require('../constants/AuthConstants');
+var RegisterConstants = require('../constants/RegisterConstants');
 var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
-var ActionTypes = AuthConstants.ActionTypes;
+var ActionTypes = RegisterConstants.ActionTypes;
 var _loggedIn = false;
 
 var AuthenticationStore = assign({}, EventEmitter.prototype, {

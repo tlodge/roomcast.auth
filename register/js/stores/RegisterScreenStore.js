@@ -7,21 +7,31 @@
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
-var AuthConstants = require('../constants/AuthConstants');
+var RegisterConstants = require('../constants/RegisterConstants');
 var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
-var ActionTypes = AuthConstants.ActionTypes;
-var _screen = "splash";
+var ActionTypes = RegisterConstants.ActionTypes;
+var _screens = ["location", "occupancy", "contacts"];
+var _screenIndex = 0;
+
 
 var _set_screen = function(screen){
-  _screen = screen;
+  
+};
+
+var _next_screen = function(){
+  _screenIndex = (++_screenIndex)%_screens.length;
+};
+
+var _previous_screen = function(){
+ _screenIndex = (++_screenIndex)%_screens.length;
 };
 
 var ScreenStore = assign({}, EventEmitter.prototype, {
 
   screen: function(){
-    return _screen;
+    return _screens[_screenIndex];
   },
 
   emitChange: function() {
@@ -48,10 +58,20 @@ ScreenStore.dispatchToken = AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
-  case ActionTypes.CHANGE_SCREEN:
-    _set_screen(action.action.screen);
-    ScreenStore.emitChange();
+    case ActionTypes.CHANGE_SCREEN:
+      //_set_screen(action.action.screen);
+      //ScreenStore.emitChange();
     break;
+
+    case ActionTypes.NEXT_SCREEN:
+      _next_screen();
+      ScreenStore.emitChange();
+      break;
+
+    case ActionTypes.PREVIOUS_SCREEN:
+      _previous_screen();
+      ScreenStore.emitChange();
+      break;
 
     default:
       // no op

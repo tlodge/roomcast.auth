@@ -10,11 +10,11 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-var AuthConstants = require('../constants/AuthConstants');
+var RegisterConstants = require('../constants/RegisterConstants');
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('object-assign');
 
-var PayloadSources = AuthConstants.PayloadSources;
+var PayloadSources = RegisterConstants.PayloadSources;
 
 var AppDispatcher = assign(new Dispatcher(), {
 

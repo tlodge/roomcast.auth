@@ -6,9 +6,9 @@
  */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-var AuthConstants = require('../constants/AuthConstants');
+var RegisterConstants = require('../constants/RegisterConstants');
 
-var ActionTypes = AuthConstants.ActionTypes;
+var ActionTypes = RegisterConstants.ActionTypes;
 
 var NavigationActionCreators = {
 
@@ -20,7 +20,25 @@ var NavigationActionCreators = {
       	type: ActionTypes.CHANGE_SCREEN,
      	screen: screen,
     });
+  },
+
+  nextScreen: function(){
+  	
+  	AppDispatcher.handleViewAction({
+      	type: ActionTypes.NEXT_SCREEN,
+     	screen: screen,
+    });
+  },
+
+  previousScreen: function(){
+  	
+  	AppDispatcher.handleViewAction({
+      	type: ActionTypes.PREVIOUS_SCREEN,
+     	screen: screen,
+    });
   }
+
 };
+
 
 module.exports = NavigationActionCreators;
