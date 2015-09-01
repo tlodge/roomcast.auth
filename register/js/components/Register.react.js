@@ -196,7 +196,7 @@ var Register = React.createClass({
                     </label>
                     <label style={labelstyle}>Your <strong>apartment</strong> number
                       <div className="row">
-                        <div className="small-2 columns">
+                        <div className="small-4 large-2 columns">
                           <input type="text"/>
                         </div>
                       </div>
