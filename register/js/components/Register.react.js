@@ -196,13 +196,13 @@ var Register = React.createClass({
                     </label>
                     <label style={labelstyle}>Your <strong>apartment</strong> number
                       <div className="row">
-                        <div className="large-4 columns">
+                        <div className="small-4 columns">
                           <div className="row collapse">
-                            <div className="large-7 columns">
+                            <div className="small-7 columns">
                               <input type="text"/>
                             </div>
-                            <div className="large-5 columns">
-                              <a className="button tiny postfix">add</a>
+                            <div className="small-5 columns">
+                              <a className="button postfix">add</a>
                             </div>
                           </div>
                         </div>
