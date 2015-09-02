@@ -55,16 +55,17 @@ var Register = React.createClass({
         //no op
     }
     
-    var toolbarheight   = 74;
+    var toolbarheight   = 64;
+    var bottombarheight = 54;
     var loginwidth      = 276;
     var titleheight     = 40;
     var textinputheight = 37;
     var textinputmargin = 16;
     var houseaspect     = 200/240;
     var shadowratio     = 100/240;
-    var containerheight = Math.max(120, (this.props.height - toolbarheight- toolbarheight)/2);
+    var containerheight = Math.max(120, (this.props.height - toolbarheight- bottombarheight)/2);
     var formheight      = (textinputheight * 2) + textinputmargin;
-    var housewidth      = (toolbarheight / shadowratio) * houseaspect;
+    var housewidth      = (bottombarheight / shadowratio) * houseaspect;
 
     var topbar ={
       background: 'rgb(91,91,91)',
@@ -77,6 +78,10 @@ var Register = React.createClass({
 
     var maintitle = {
       fontSize: '150%',
+    };
+
+    var backstyle = {
+      fontSize: "120%",
     };
    
     var background = {
@@ -92,7 +97,7 @@ var Register = React.createClass({
       background: '#e6e6e6',
       opacity: 0.8,
       width: this.props.width,
-      height: this.props.height - (2 * toolbarheight),
+      height: this.props.height - toolbarheight - bottombarheight,
       zIndex: 2,
     };
 
@@ -101,7 +106,7 @@ var Register = React.createClass({
       position: 'absolute',
       top: toolbarheight,
       width: this.props.width,
-      height: this.props.height - (2 * toolbarheight),
+      height: this.props.height - toolbarheight - bottombarheight,
       zIndex: 31,
     };
 
@@ -121,10 +126,10 @@ var Register = React.createClass({
       bottom: 0,
       left:  (housewidth  * 120/200),
       width: this.props.width - (housewidth  * 120/200),
-      height: toolbarheight,
-      minHeight: toolbarheight,
+      height: bottombarheight,
+      minHeight: bottombarheight,
       color: 'white',
-      lineHeight: toolbarheight + 'px',
+      lineHeight: bottombarheight + 'px',
       fontSize: '150%',
       zIndex: 30,
     };
@@ -133,7 +138,7 @@ var Register = React.createClass({
       position: 'absolute',
       bottom: 0,
       left: housewidth  * 120/200,
-      height: toolbarheight,
+      height: bottombarheight,
       width: this.props.width - (housewidth  * 120/200),
       background: "#d35a51",
       color: 'white',
@@ -153,7 +158,7 @@ var Register = React.createClass({
     var back;
 
     if (this.state.cangoback){
-      back = <a onTouchTap={this._handleBack} className='right'>back</a>;
+      back = <a style={backstyle} onTouchTap={this._handleBack} className='right'>back</a>;
     }
 
     return(
