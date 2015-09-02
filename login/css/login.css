@@ -19,3 +19,42 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
   box-shadow: none;
 }
 
+form .row .row {
+    margin: 0.5rem -0.5rem;
+}
+
+.button-group{
+	margin: 0.5rem 0 0;
+}
+
+small.code{
+	background: #7bb6a4 none repeat scroll 0 0;
+    color: #ffffff;
+    display: block;
+    font-size: 1rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
+    margin-top: -1px;
+    padding: 0.375rem 0.5625rem 0.5625rem;
+    text-align: center;
+}
+
+input.code{
+	margin-bottom: 0;
+}
+
+.cell{
+	background: rgba(255,255,255,0.3);
+	border-bottom: 2px solid #7bb6a4;
+	width: 100%;
+	padding: 10px;
+	height: auto;
+}
+
+.noborder{
+	border: none;
+}
+
+.unpadded{
+	padding: 0;
+}

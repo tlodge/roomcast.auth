@@ -1,11 +1,15 @@
 var React = require('react');
-var WebAPIUtils = require('../utils/WebAPIUtils');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
 var RegisterScreenStore = require('../stores/RegisterScreenStore');
+var Location = require('./Location.react');
+var Code = require('./Code.react');
+var Occupancy = require('./Occupancy.react');
+var Contacts = require('./Contacts.react');
 
 function getStateFromStores() {
   return {
     screen: RegisterScreenStore.screen(),
+    cangoback: RegisterScreenStore.cangoback(),
   };
 }
 
@@ -31,6 +35,10 @@ var Register = React.createClass({
     console.log(this.state.screen);
 
     switch(this.state.screen){
+      case "code":
+        content = <Code/>;
+        break;
+
       case "location":
         content = <Location/>;
         break;
@@ -67,7 +75,7 @@ var Register = React.createClass({
       paddingRight: 15,
     };
 
-     var maintitle = {
+    var maintitle = {
       fontSize: '150%',
     };
    
@@ -94,7 +102,6 @@ var Register = React.createClass({
       top: toolbarheight,
       width: this.props.width,
       height: this.props.height - (2 * toolbarheight),
-      padding: 10,
       zIndex: 31,
     };
 
@@ -107,8 +114,6 @@ var Register = React.createClass({
         padding: 0,
         lineHeight: titleheight + 'px',
     };
-  
-   
 
     var submitstyle = {
       position: 'absolute',
@@ -145,6 +150,12 @@ var Register = React.createClass({
       padding: 7,
     };
 
+    var back;
+
+    if (this.state.cangoback){
+      back = <a onTouchTap={this._handleBack} className='right'>back</a>;
+    }
+
     return(
       <div>
         <div style={background}>
@@ -154,6 +165,7 @@ var Register = React.createClass({
           </div>
            <div className='clearfix' style={topbar}>
               <a style={maintitle} className='left'>register!</a>
+              {back}
           </div>
          
           <div onTouchTap={this._handleNext} style={submitstyle}>
@@ -182,119 +194,6 @@ var Register = React.createClass({
   _onChange: function() {
     this.setState(getStateFromStores());
   }
-});
-
-
-
-var Location = React.createClass({
-
-  render: function(){
-
-    var addmore ={
-      color: "rgb(91, 91, 91)"
-    };
-
-    var constrained ={
-      maxHeight: '80',
-      width: '100%',
-      overflowX: 'auto',
-      overflowY: 'hidden',
-      whiteSpace: 'nowrap',
-    };
-
-    var listyle={
-      display: 'inline-block'
-    };
-
-    return (
-
-        <form>
-        <div className="row">
-          <div className="large-12 columns">
-           <input type="text" placeholder="development code"/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="large-12 columns">
-            <label>your block
-              <div className="large-12 columns" style={constrained}>
-                <ul className="button-group">
-                  <li style={listyle}><div className="button tiny">left</div></li>
-                  <li style={listyle}><div className="button tiny">right</div></li>
-                  <li style={listyle}><div className="button tiny">up</div></li>
-                  <li style={listyle}><div className="button tiny">chart house</div></li>
-                  <li style={listyle}><div className="button tiny">langbourne</div></li>
-                </ul>
-              </div>
-            </label>
-            <label> your apartment number
-              <div className="row">
-                <div className="small-4 large-2 columns">
-                  <input type="text"/>
-                </div>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="large-12 columns">
-            <a style={addmore} href="#">add more</a>
-          </div>
-        </div>
-      </form>);
-  }
-});
-
-
-var Occupancy = React.createClass({
-  render: function(){
-    return <h1> Occupancy </h1>;
-  }
-});
-
-var Contacts = React.createClass({
-  render: function(){
-    return <h1> Contacts </h1>;
-  }
-});
-
-var LoginUserName = React.createClass({
-
-  getInitialState: function() {
-      return {username: this.props.username || ""};
-  },
-
-  render: function(){
-    return <input type="text" errorText={this.props.errorText} name="username" value={this.state.username} onBlur={this._onLoseFocus} onChange={this._onTextChange} floatingLabelText="your username" placeholder="username"/>;
-  },
-
-  _onTextChange: function(event, value) {
-      this.setState({username: event.target.value});
-  },
-
-  _onLoseFocus: function(event){
-    event.preventDefault();
-    this._handleUserNameUpdate();
-  },
-
-  _handleUserNameUpdate: function(){
-
-    var username = this.state.username.trim();
-
-    if (username  && username!=="") {
-      this.props.handleUpdate(username);
-    }
-  },
-});
-
-
-var LoginPassword = React.createClass({
-
-  render: function(){
-    return <input type="password" errorText={this.props.errorText} name="password" floatingLabelText="your password" placeholder="password"/>;
-  }
-
 });
 
 module.exports = Register;

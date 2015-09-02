@@ -12,7 +12,7 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 var ActionTypes = RegisterConstants.ActionTypes;
-var _screens = ["location", "occupancy", "contacts"];
+var _screens = ["code", "location", "occupancy", "contacts"];
 var _screenIndex = 0;
 
 
@@ -29,6 +29,10 @@ var _previous_screen = function(){
 };
 
 var ScreenStore = assign({}, EventEmitter.prototype, {
+
+  cangoback: function(){
+    return _screenIndex !== 0;
+  },
 
   screen: function(){
     return _screens[_screenIndex];
