@@ -55,7 +55,7 @@ var Register = React.createClass({
         //no op
     }
     
-    var toolbarheight   = 54;
+    var toolbarheight   = 74;
     var loginwidth      = 276;
     var titleheight     = 40;
     var textinputheight = 37;
