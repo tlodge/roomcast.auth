@@ -24,6 +24,8 @@ var Occupancy = React.createClass({
       textAlign: 'center'
     };
    
+   
+    
     return (<form>
         <div className="row">
           <div className="large-12 columns unpadded">

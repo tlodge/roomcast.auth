@@ -1,4 +1,5 @@
 var React = require('react');
+var RegisterActionCreators = require('../actions/RegisterActionCreators');
 
 var Location = React.createClass({
 
@@ -12,13 +13,20 @@ var Location = React.createClass({
       whiteSpace: 'nowrap',
     };
 
-    var listyle={
-      display: 'inline-block'
-    };
+    var blocks; 
 
-    var greenback ={
-      background: '#7bb6a4'
-    };
+    if (this.props.development.blocks){
+      blocks = this.props.development.blocks.map(function(block){
+       
+        var props = {
+                        handleSelect: this._handleSelect,
+                        name:block.name,
+                        blockId: block.blockId,
+                        selected: this.props.selectedblock ? this.props.selectedblock === block.blockId : false,
+                    };
+        return  <Block {...props}/>;
+      }.bind(this));
+    }
 
     return (
 
@@ -28,11 +36,7 @@ var Location = React.createClass({
             <div className="cell">
               <label>your block </label>  
               <ul className="button-group">
-                    <li style={listyle}><div style={greenback} className="button tiny">left</div></li>
-                    <li style={listyle}><div style={greenback} className="button tiny">right</div></li>
-                    <li style={listyle}><div style={greenback} className="button tiny">up</div></li>
-                    <li style={listyle}><div style={greenback} className="button tiny">chart house</div></li>
-                    <li style={listyle}><div style={greenback} className="button tiny">langbourne</div></li>
+                   {blocks}
               </ul>
             </div>
             <div className="cell noborder">
@@ -48,7 +52,29 @@ var Location = React.createClass({
         </div>
       </form>);
 
+  },
+
+  _handleSelect: function(blockId){
+    RegisterActionCreators.selectBlock(blockId);
   }
+
 });
 
+var Block = React.createClass({
+
+  render: function(){
+    var listyle={
+      display: 'inline-block'
+    };
+    var background = {
+      background: this.props.selected ? '#d35a51' : '#7bb6a4'
+    };
+
+    return <li onTouchTap={this._handleSelect} style={listyle}><div style={background} className="button tiny">{this.props.name}</div></li>;
+  },
+
+  _handleSelect: function(){
+    this.props.handleSelect(this.props.blockId);
+  }
+});
 module.exports = Location;

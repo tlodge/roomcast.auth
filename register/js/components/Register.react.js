@@ -1,6 +1,7 @@
 var React = require('react');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
 var RegisterScreenStore = require('../stores/RegisterScreenStore');
+var DevelopmentStore = require('../stores/DevelopmentStore');
 var Location = require('./Location.react');
 var Code = require('./Code.react');
 var Occupancy = require('./Occupancy.react');
@@ -10,6 +11,8 @@ function getStateFromStores() {
   return {
     screen: RegisterScreenStore.screen(),
     cangoback: RegisterScreenStore.cangoback(),
+    development: DevelopmentStore.development(),
+    selectedblock: DevelopmentStore.selectedblock(),
   };
 }
 
@@ -20,11 +23,13 @@ var Register = React.createClass({
   },
 
   componentDidMount: function() {
+     DevelopmentStore.addChangeListener(this._onChange);
      RegisterScreenStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
     RegisterScreenStore.removeChangeListener(this._onChange);
+    DevelopmentStore.removeChangeListener(this._onChange);
   },
 
   render: function(){
@@ -33,22 +38,29 @@ var Register = React.createClass({
     var content;
     console.log("screen is");
     console.log(this.state.screen);
+    var props = {
+                    development:this.state.development,
+                    selectedblock: this.state.selectedblock
+                };
 
+    console.log("props are");
+    console.log(props);
+    
     switch(this.state.screen){
       case "code":
-        content = <Code/>;
+        content = <Code {...props}/>;
         break;
 
       case "location":
-        content = <Location/>;
+        content = <Location {...props}/>;
         break;
 
       case "occupancy":
-        content = <Occupancy/>;
+        content = <Occupancy {...props}/>;
         break;
 
       case "contacts":
-        content = <Contacts/>;
+        content = <Contacts {...props}/>;
         break;
 
       default:

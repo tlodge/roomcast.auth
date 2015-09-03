@@ -13,6 +13,8 @@ module.exports = {
 		CHANGE_SCREEN:null,
 		NEXT_SCREEN: null,
 		PREVIOUS_SCREEN: null,
+		RAW_DEVELOPMENT: null,
+		BLOCK_SELECTED: null,
   	}),
 
   	PayloadSources: keyMirror({

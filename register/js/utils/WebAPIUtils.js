@@ -1,5 +1,6 @@
 var $ = require('jquery');
 var request = require('superagent');
+var ServerActionCreators = require('../actions/ServerActionCreators');
 
 module.exports = {
 
@@ -20,6 +21,19 @@ module.exports = {
           window.location.href = res.xhr.responseURL;
         }
      });
-  }
+  },
 
+  getDevelopment: function(code){
+    request
+      .get('/auth/development')
+      .query({code:code})
+      .set('Accept', 'application/json')
+      .end(function(err, res){
+        if (err){
+          console.log(err);
+        }else{
+          ServerActionCreators.receivedDevelopment(res.body);
+        }
+     });
+  }
 };

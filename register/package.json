@@ -4,6 +4,7 @@
   "description": "Roomcast Login/Register Component",
   "main": "js/app.js",
   "dependencies": {
+    "coupon-code": "^0.4.3",
     "flux": "^2.0.1",
     "jquery": "^2.1.3",
     "keymirror": "~0.1.0",
