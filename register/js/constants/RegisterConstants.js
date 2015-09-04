@@ -15,6 +15,8 @@ module.exports = {
 		PREVIOUS_SCREEN: null,
 		RAW_DEVELOPMENT: null,
 		BLOCK_SELECTED: null,
+		APARTMENT_PARTIAL: null,
+		APARTMENT_SELECTED: null,
   	}),
 
   	PayloadSources: keyMirror({

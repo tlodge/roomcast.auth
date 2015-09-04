@@ -20,6 +20,20 @@ var RegisterActionCreators = {
     });
   },
 
+  lookupApartment: function(partial){
+    AppDispatcher.handleViewAction({
+      type: ActionTypes.APARTMENT_PARTIAL,
+      partial: partial,
+    });
+  },
+
+  selectApartment: function(apartment){
+    AppDispatcher.handleViewAction({
+      type: ActionTypes.APARTMENT_SELECTED,
+      apartment: apartment,
+    });
+  },
+
 };
 
 

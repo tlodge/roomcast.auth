@@ -13,6 +13,8 @@ function getStateFromStores() {
     cangoback: RegisterScreenStore.cangoback(),
     development: DevelopmentStore.development(),
     selectedblock: DevelopmentStore.selectedblock(),
+    matches: DevelopmentStore.matches(10),
+    apartment: DevelopmentStore.apartment(),
   };
 }
 
@@ -36,16 +38,17 @@ var Register = React.createClass({
 
 
     var content;
-    console.log("screen is");
-    console.log(this.state.screen);
+    
     var props = {
                     development:this.state.development,
-                    selectedblock: this.state.selectedblock
+                    selectedblock: this.state.selectedblock,
+                    matches: this.state.matches,
+                    apartment: this.state.apartment,
                 };
 
-    console.log("props are");
+    console.log("re-rednering");
     console.log(props);
-    
+
     switch(this.state.screen){
       case "code":
         content = <Code {...props}/>;
