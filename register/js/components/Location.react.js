@@ -30,7 +30,7 @@ var Location = React.createClass({
 
     return (
 
-        <form>
+        
         <div className="row">
           <div className="large-12 columns unpadded">
             <div className="cell">
@@ -53,7 +53,7 @@ var Location = React.createClass({
             </div>
           </div>
         </div>
-      </form>);
+      );
 
   },
 
