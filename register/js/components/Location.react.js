@@ -1,6 +1,7 @@
 var React = require('react');
 var RegisterActionCreators = require('../actions/RegisterActionCreators');
-                   
+var ENTER_KEY_CODE = 13;
+                  
 var Location = React.createClass({
 
   render: function(){
@@ -15,14 +16,13 @@ var Location = React.createClass({
 
     var blocks; 
 
-    if (this.props.development.blocks){
+    if (this.props.development && this.props.development.blocks){
         blocks = this.props.development.blocks.map(function(block){
        
         var props = {
                         handleSelect: this._handleSelect,
-                        name:block.name,
-                        blockId: block.blockId,
-                        selected: this.props.selectedblock ? this.props.selectedblock === block.blockId : false,
+                        block: block,
+                        selected: this.props.selectedblock ? this.props.selectedblock.blockId === block.blockId : false,
                     };
         return  <Block key={block.blockId} {...props}/>;
       }.bind(this));
@@ -43,10 +43,10 @@ var Location = React.createClass({
               <label> your apartment number
                 <div className="row">
                   <div className="small-4 large-2 columns">
-                    <ApartmentSelect />
+                    <ApartmentSelect {...this.props}/>
                   </div>
                   <div className="small-8 large-10 columns">
-                     <ApartmentMatches matches={this.props.matches}/>
+                     <ApartmentMatches {...this.props}/>
                   </div>
                 </div>
               </label>
@@ -67,22 +67,48 @@ var Location = React.createClass({
 var ApartmentSelect = React.createClass({
   
   getInitialState: function(){
-    return {text:""};
+    return {text: ""};
   },
 
   render: function(){
-    return <input type="text" value={this.state.text} onChange={this._onChange}/>;
+
+    var value = this.props.apartment ? this.props.apartment.name : this.state.text;
+    return <input type="text" value={value} onBlur={this._onBlur} onFocus={this._onFocus} onKeyDown={this._onKeyDown} onChange={this._onChange}/>;
+  },
+
+  _onFocus: function(){
+    this.setState({text:""});
+    RegisterActionCreators.selectApartmentByName("");
+  },
+
+  _onBlur: function(event){
+    var text = this.state.text.trim();
+    if (text) {
+      RegisterActionCreators.selectApartmentByName(text);
+    }
   },
 
   _onChange: function(event, value) {
-    var text = event.target.value;
     
+    var text = event.target.value;
+    this.props.apartment = null;
+
     this.setState({text:text});
 
     if (text.trim() !== ""){
        RegisterActionCreators.lookupApartment(text);
     }
   },
+
+  _onKeyDown: function(event) {
+    if (event.keyCode === ENTER_KEY_CODE) {
+      event.preventDefault();
+      var text = this.state.text.trim();
+      if (text) {
+        RegisterActionCreators.selectApartmentByName(text);
+      }
+    }
+  }
 
 });
 
@@ -96,21 +122,29 @@ var ApartmentMatches = React.createClass({
 
     var apartments = this.props.matches.map(function(apartment){
       var props = {
-        apartment:apartment
+        apartment:apartment,
+        selected: this.props.apartment ? this.props.apartment.apartmentId === apartment.apartmentId : false,
       };
       return <Apartment key={apartment.apartmentId} {...props} />;
-    });
+    }.bind(this));
     return <ul className="button-group" style={nomargins} >{apartments}</ul>;
   },
 });
 
 var Apartment = React.createClass({
+
+ 
+
   render: function(){
-    return <li><a onTouchTap={this._handleSelect} className="button tiny">{this.props.apartment.name}</a></li>;
+    var background = {
+      background: this.props.selected ? '#d35a51' : '#7bb6a4'
+    };
+
+    return <li><a onTouchTap={this._handleSelect} className="button tiny" style={background}>{this.props.apartment.name}</a></li>;
   },
 
   _handleSelect: function(){
-    console.log(this.props.apartment);
+    RegisterActionCreators.selectApartment(this.props.apartment);
   },
 });
 
@@ -124,11 +158,11 @@ var Block = React.createClass({
       background: this.props.selected ? '#d35a51' : '#7bb6a4'
     };
 
-    return <li onTouchTap={this._handleSelect} style={listyle}><div style={background} className="button tiny">{this.props.name}</div></li>;
+    return <li onTouchTap={this._handleSelect} style={listyle}><div style={background} className="button tiny">{this.props.block.name}</div></li>;
   },
 
   _handleSelect: function(){
-    this.props.handleSelect(this.props.blockId);
+    this.props.handleSelect(this.props.block);
   }
 });
 module.exports = Location;

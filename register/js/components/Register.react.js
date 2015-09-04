@@ -11,10 +11,15 @@ function getStateFromStores() {
   return {
     screen: RegisterScreenStore.screen(),
     cangoback: RegisterScreenStore.cangoback(),
+    canprogress: RegisterScreenStore.canprogress(),
     development: DevelopmentStore.development(),
     selectedblock: DevelopmentStore.selectedblock(),
     matches: DevelopmentStore.matches(10),
     apartment: DevelopmentStore.apartment(),
+    occupancies: DevelopmentStore.occupancies(),
+    selectedoccupancy: DevelopmentStore.selectedoccupancy(),
+    mobile: DevelopmentStore.mobile(),
+    email: DevelopmentStore.email(),
   };
 }
 
@@ -39,15 +44,8 @@ var Register = React.createClass({
 
     var content;
     
-    var props = {
-                    development:this.state.development,
-                    selectedblock: this.state.selectedblock,
-                    matches: this.state.matches,
-                    apartment: this.state.apartment,
-                };
-
-    console.log("re-rednering");
-    console.log(props);
+    var props = this.state;
+    props.next = this._handleNext;
 
     switch(this.state.screen){
       case "code":
@@ -147,6 +145,7 @@ var Register = React.createClass({
       lineHeight: bottombarheight + 'px',
       fontSize: '150%',
       zIndex: 30,
+      opacity: this.state.canprogress ? 1.0 : 0.5,
     };
 
     var submitbar ={
@@ -202,7 +201,9 @@ var Register = React.createClass({
   },
 
   _handleNext: function(){
-    ScreenActionCreators.nextScreen();
+    if (this.state.canprogress){
+     ScreenActionCreators.nextScreen();
+    }
   },
 
   _handleBack: function(){

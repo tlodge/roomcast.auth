@@ -12,12 +12,29 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 var ActionTypes = RegisterConstants.ActionTypes;
-var _development = {};
+var _development = null;
 var _selectedblock = null;
 var _apartments = {};
 var _matches = [];
 var _apartment = null;
 var _matchstr = null;
+var _selectedoccupancy = null;
+var _mobile = "";
+var _email = "";
+
+var _occupancies = [
+  {id:"owner", name:"owner"},
+  {id:"tenant", name:"tenant"},
+  {id:"owneroccupant", name:"own and occupy"},
+];
+
+var _updateMobile = function (mobile){
+  _mobile = mobile;
+};
+
+var _updateEmail = function (email){
+  _email = email;
+};
 
 var _findMatches = function(str){
 
@@ -32,8 +49,8 @@ var _findMatches = function(str){
 
   _matches = [];
 
-  if (_selectedblock) 
-      _matches = _apartments[_selectedblock] || [];
+  if (_selectedblock && _selectedblock.blockId) 
+      _matches = _apartments[_selectedblock.blockId] || [];
   
 
   _matches = _matches.filter(function(apartment){
@@ -41,8 +58,26 @@ var _findMatches = function(str){
   });
 };
 
+var _selectOccupancy = function(occupancy){
+  _selectedoccupancy = occupancy;
+};
+
 var _selectApartment = function(apartment){
   _apartment = apartment;
+};
+
+var _unselectApartment = function(){
+  _apartment = null;
+};
+
+var _selectApartmentByName = function(name){
+  if (_selectedblock && _selectedblock.blockId){ 
+      _apartment = _apartments[_selectedblock.blockId].filter(function(apartment){
+        return apartment.name.toLowerCase() === name.toLowerCase().trim();
+      }).reduce(function(acc, obj){
+        return obj;
+      },null);
+  }
 };
 
 var _setDevelopment = function(development){
@@ -55,8 +90,8 @@ var _setDevelopment = function(development){
 };
 
 
-var _selectBlock = function(blockId){
-  _selectedblock = blockId;
+var _selectBlock = function(block){
+  _selectedblock = block;
 };
 
 var DevelopmentStore = assign({}, EventEmitter.prototype, {
@@ -70,9 +105,6 @@ var DevelopmentStore = assign({}, EventEmitter.prototype, {
   },
 
   matches: function(nomorethan){
-    console.log("matches length is " + _matches.length);
-    console.log(_matches);
-    
     if (nomorethan && _matches.length > nomorethan)
         return [];
     return _matches;
@@ -80,6 +112,22 @@ var DevelopmentStore = assign({}, EventEmitter.prototype, {
 
   apartment: function(){
     return _apartment;
+  },
+
+  occupancies: function(){
+    return _occupancies;
+  },
+
+  selectedoccupancy: function(){
+    return _selectedoccupancy;
+  },
+
+  mobile: function(){
+    return _mobile;
+  },
+
+  email: function(){
+    return _email;
   },
 
   emitChange: function() {
@@ -112,8 +160,9 @@ DevelopmentStore.dispatchToken = AppDispatcher.register(function(action) {
     break;
 
   case ActionTypes.BLOCK_SELECTED:
-    _selectBlock(action.action.blockId);
+    _selectBlock(action.action.block);
     _findMatches();
+    _unselectApartment();
     DevelopmentStore.emitChange();
     break;
 
@@ -126,6 +175,29 @@ DevelopmentStore.dispatchToken = AppDispatcher.register(function(action) {
     _selectApartment(action.action.apartment);
     DevelopmentStore.emitChange();
     break;
+
+  case ActionTypes.APARTMENT_SELECTED_BY_NAME:
+    _selectApartmentByName(action.action.name);
+    DevelopmentStore.emitChange();
+    break;
+
+  case ActionTypes.OCCUPANCY_SELECTED:
+    _selectOccupancy(action.action.occupancy);
+    DevelopmentStore.emitChange();
+    break;
+
+  case ActionTypes.MOBILE_UPDATED:
+    
+    _updateMobile(action.action.mobile);
+    DevelopmentStore.emitChange();
+    break;
+
+  case ActionTypes.EMAIL_UPDATED:
+
+    _updateEmail(action.action.email);
+    DevelopmentStore.emitChange();
+    break;
+
   default:
       // no op
   }

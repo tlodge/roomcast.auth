@@ -9,6 +9,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var RegisterConstants = require('../constants/RegisterConstants');
 var assign = require('object-assign');
+var DevelopmentStore = require('./DevelopmentStore');
 
 var CHANGE_EVENT = 'change';
 var ActionTypes = RegisterConstants.ActionTypes;
@@ -25,13 +26,33 @@ var _next_screen = function(){
 };
 
 var _previous_screen = function(){
- _screenIndex = (++_screenIndex)%_screens.length;
+ _screenIndex = (--_screenIndex)%_screens.length;
 };
 
 var ScreenStore = assign({}, EventEmitter.prototype, {
 
   cangoback: function(){
     return _screenIndex !== 0;
+  },
+
+  canprogress: function(){
+    switch (_screens[_screenIndex]){
+
+      case "code":
+        return  DevelopmentStore.development() !== null;
+      
+      case "location":
+        return DevelopmentStore.apartment() !== null; 
+
+      case "occupancy":
+        return  DevelopmentStore.selectedoccupancy() !== null; 
+
+      case "contacts":
+        return  DevelopmentStore.mobile().trim() !== "" && DevelopmentStore.email().trim(); 
+
+      default:
+        return false;
+    }
   },
 
   screen: function(){

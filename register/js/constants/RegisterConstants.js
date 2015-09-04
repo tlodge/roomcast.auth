@@ -17,6 +17,10 @@ module.exports = {
 		BLOCK_SELECTED: null,
 		APARTMENT_PARTIAL: null,
 		APARTMENT_SELECTED: null,
+		APARTMENT_SELECTED_BY_NAME: null,
+		OCCUPANCY_SELECTED:null,
+		MOBILE_UPDATED:null,
+		EMAIL_UPDATED:null,
   	}),
 
   	PayloadSources: keyMirror({

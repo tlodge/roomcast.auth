@@ -16,24 +16,25 @@ var Code = React.createClass({
 
     var development;
 
-    if (this.props.development.name){
-      development = <small className="code">{this.props.development.name}</small>;
+    if (this.props.development && this.props.development.name){
+      development = <small onTouchTap={this.props.next} className="code">{this.props.development.name}</small>;
     }
 
-    return (<form>
+    return (
               <div className="row" style={padstyle}>
                 <div className="large-12 columns">
                     <input type="text" onChange={this._onChange} value={this.state.text} className="code" placeholder="development code"/>
                     {development}
                 </div>
               </div>
-            </form>);
+            );
   },
 
   _onChange: function(event, value) {
-    this.setState({text: event.target.value});
-    if (cc.validate(event.target.value, {parts:2, partLen:4}) !== ""){
-      WebAPIUtils.getDevelopment(event.target.value);
+    var text = event.target.value.trim();
+    this.setState({text: text});
+    if (text!=="" && cc.validate(text, {parts:2, partLen:4}) !== ""){
+      WebAPIUtils.getDevelopment(text);
     }else{
       console.log("NOT YET VALID!!");
     }
