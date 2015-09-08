@@ -2,7 +2,7 @@ var React = require('react');
 var RegisterActionCreators = require('../actions/RegisterActionCreators');
 var TextField = require('./TextField.react');
 
-var Contacts = React.createClass({
+var User = React.createClass({
 
   render: function(){
  
@@ -11,19 +11,28 @@ var Contacts = React.createClass({
         <div className="row">
           <div className="large-12 columns unpadded">
             <div className="cell">
-              <label>your email 
+              <label>choose a username 
               	 <div className="row">
                   <div className="small-8 large-8 columns">
-                     <TextField value={this.props.email} handler={RegisterActionCreators.updateEmail}/>
+                     <TextField value={this.props.username} handler={RegisterActionCreators.updateUsername}/>
+                  </div>
+                </div>
+              </label>  
+            </div>
+            <div className="cell">
+              <label>your first name 
+                 <div className="row">
+                  <div className="small-8 large-8 columns">
+                     <TextField value={this.props.firstname} handler={RegisterActionCreators.updateFirstname}/>
                   </div>
                 </div>
               </label>  
             </div>
             <div className="cell noborder">
-              <label>your mobile number
+              <label>your surname
                 <div className="row">
                   <div className="small-8 large-8 columns">
-                   	<TextField value={this.props.mobile} handler={RegisterActionCreators.updateMobile}/>
+                   	<TextField value={this.props.surname} handler={RegisterActionCreators.updateSurname}/>
                   </div>
                 </div>
               </label>
@@ -34,4 +43,4 @@ var Contacts = React.createClass({
   }
 });
 
-module.exports = Contacts;
+module.exports = User;

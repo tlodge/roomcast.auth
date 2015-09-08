@@ -12,15 +12,10 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 var ActionTypes = RegisterConstants.ActionTypes;
-var _development = null;
-var _selectedblock = null;
-var _apartments = {};
+
+var _details = {};
 var _matches = [];
-var _apartment = null;
 var _matchstr = null;
-var _selectedoccupancy = null;
-var _mobile = "";
-var _email = "";
 
 var _occupancies = [
   {id:"owner", name:"owner"},
@@ -28,12 +23,29 @@ var _occupancies = [
   {id:"owneroccupant", name:"own and occupy"},
 ];
 
+var _updateUsername = function(username){
+  _details.username = username;
+};
+
+var _updateFirstname = function(firstname){
+   console.log("updating first name");
+  console.log(firstname);
+  
+  _details.firstname = firstname;
+};
+
+var _updateSurname = function(surname){
+     console.log("updating surname");
+  console.log(surname);
+  _details.surname = surname;
+};
+
 var _updateMobile = function (mobile){
-  _mobile = mobile;
+  _details.mobile = mobile;
 };
 
 var _updateEmail = function (email){
-  _email = email;
+ _details.email = email;
 };
 
 var _findMatches = function(str){
@@ -49,8 +61,8 @@ var _findMatches = function(str){
 
   _matches = [];
 
-  if (_selectedblock && _selectedblock.blockId) 
-      _matches = _apartments[_selectedblock.blockId] || [];
+  if (_details.selectedblock && _details.selectedblock.blockId) 
+      _matches = _details.apartments[_details.selectedblock.blockId] || [];
   
 
   _matches = _matches.filter(function(apartment){
@@ -59,20 +71,20 @@ var _findMatches = function(str){
 };
 
 var _selectOccupancy = function(occupancy){
-  _selectedoccupancy = occupancy;
+  _details.selectedoccupancy = occupancy;
 };
 
 var _selectApartment = function(apartment){
-  _apartment = apartment;
+   _details.apartment = apartment;
 };
 
 var _unselectApartment = function(){
-  _apartment = null;
+   _details.apartment = null;
 };
 
 var _selectApartmentByName = function(name){
-  if (_selectedblock && _selectedblock.blockId){ 
-      _apartment = _apartments[_selectedblock.blockId].filter(function(apartment){
+  if (_details.selectedblock &&  _details.selectedblock.blockId){ 
+      _apartment =  _details.apartments[_details.selectedblock.blockId].filter(function(apartment){
         return apartment.name.toLowerCase() === name.toLowerCase().trim();
       }).reduce(function(acc, obj){
         return obj;
@@ -81,9 +93,9 @@ var _selectApartmentByName = function(name){
 };
 
 var _setDevelopment = function(development){
-  _development = development;
+   _details.development = development;
   
-  _apartments = _development.blocks.reduce(function(acc, block){
+  _details.apartments = _details.development.blocks.reduce(function(acc, block){
     acc[block.blockId] = block.apartments;
     return acc;
   }, {});
@@ -91,43 +103,38 @@ var _setDevelopment = function(development){
 
 
 var _selectBlock = function(block){
-  _selectedblock = block;
+   _details.selectedblock = block;
 };
 
 var DevelopmentStore = assign({}, EventEmitter.prototype, {
 
-  selectedblock: function(){
-    return _selectedblock;
+
+  readytosubmit: function(){
+    
+    var checknull =   ['development', 'selectedblock', 'apartment', 'selectedoccupancy'];
+    var checkempty =  ['mobile', 'email', 'username', 'firstname', 'surname'];
+  
+    var ready = checknull.reduce(function(acc, obj){
+      return acc && _details[obj] !== null;
+    },checkempty.reduce(function(acc, obj){
+      return acc && _details[obj] ? _details[obj].trim() !== "" : false;
+    }, true));
+
+    return ready;
   },
 
-  development: function(){
-    return _development;
-  },
-
-  matches: function(nomorethan){
-    if (nomorethan && _matches.length > nomorethan)
-        return [];
-    return _matches;
-  },
-
-  apartment: function(){
-    return _apartment;
+  details : function(){
+    return _details;
   },
 
   occupancies: function(){
     return _occupancies;
   },
 
-  selectedoccupancy: function(){
-    return _selectedoccupancy;
-  },
-
-  mobile: function(){
-    return _mobile;
-  },
-
-  email: function(){
-    return _email;
+  matches: function(nolargerthan){
+    if (nolargerthan)
+      return _matches.length > nolargerthan? [] : _matches;
+    return _matches;
   },
 
   emitChange: function() {
@@ -195,6 +202,21 @@ DevelopmentStore.dispatchToken = AppDispatcher.register(function(action) {
   case ActionTypes.EMAIL_UPDATED:
 
     _updateEmail(action.action.email);
+    DevelopmentStore.emitChange();
+    break;
+
+  case ActionTypes.USERNAME_UPDATED:
+    _updateUsername(action.action.username);
+    DevelopmentStore.emitChange();
+    break;
+
+  case ActionTypes.FIRSTNAME_UPDATED:
+    _updateFirstname(action.action.firstname);
+    DevelopmentStore.emitChange();
+    break;
+
+  case ActionTypes.SURNAME_UPDATED:
+    _updateSurname(action.action.surname);
     DevelopmentStore.emitChange();
     break;
 

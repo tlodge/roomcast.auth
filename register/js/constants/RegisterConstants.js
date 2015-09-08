@@ -21,6 +21,9 @@ module.exports = {
 		OCCUPANCY_SELECTED:null,
 		MOBILE_UPDATED:null,
 		EMAIL_UPDATED:null,
+		USERNAME_UPDATED:null,
+		FIRSTNAME_UPDATED:null,
+		SURNAME_UPDATED:null,
   	}),
 
   	PayloadSources: keyMirror({

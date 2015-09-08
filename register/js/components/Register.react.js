@@ -1,25 +1,24 @@
 var React = require('react');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
+var SubmissionActionCreators = require('../actions/SubmissionActionCreators');
 var RegisterScreenStore = require('../stores/RegisterScreenStore');
 var DevelopmentStore = require('../stores/DevelopmentStore');
 var Location = require('./Location.react');
 var Code = require('./Code.react');
+var User = require('./User.react');
 var Occupancy = require('./Occupancy.react');
 var Contacts = require('./Contacts.react');
+var extend = require('extend');
 
 function getStateFromStores() {
   return {
     screen: RegisterScreenStore.screen(),
     cangoback: RegisterScreenStore.cangoback(),
     canprogress: RegisterScreenStore.canprogress(),
-    development: DevelopmentStore.development(),
-    selectedblock: DevelopmentStore.selectedblock(),
-    matches: DevelopmentStore.matches(10),
-    apartment: DevelopmentStore.apartment(),
+    details: DevelopmentStore.details(),
     occupancies: DevelopmentStore.occupancies(),
-    selectedoccupancy: DevelopmentStore.selectedoccupancy(),
-    mobile: DevelopmentStore.mobile(),
-    email: DevelopmentStore.email(),
+    readytosubmit: DevelopmentStore.readytosubmit(),
+
   };
 }
 
@@ -44,14 +43,21 @@ var Register = React.createClass({
 
     var content;
     
-    var props = this.state;
-    props.next = this._handleNext;
+    var props = extend({  next:this._handleNext, 
+                          occupancies:this.state.occupancies
+                        }, this.state.details);
+    
 
     switch(this.state.screen){
+
       case "code":
         content = <Code {...props}/>;
         break;
 
+      case "userdetails":
+        content = <User {...props}/>;
+        break;
+      
       case "location":
         content = <Location {...props}/>;
         break;
@@ -170,9 +176,15 @@ var Register = React.createClass({
     };
 
     var back;
+    var next = "next";
+    var nextcallback = this._handleNext;
 
     if (this.state.cangoback){
       back = <a style={backstyle} onTouchTap={this._handleBack} className='right'>back</a>;
+    }
+    if (this.state.screen === 'contacts' && this.state.readytosubmit){
+      next = "done!";
+      nextcallback = this._handleSubmit;
     }
 
     return(
@@ -187,8 +199,8 @@ var Register = React.createClass({
               {back}
           </div>
          
-          <div onTouchTap={this._handleNext} style={submitstyle}>
-              next
+          <div onTouchTap={nextcallback} style={submitstyle}>
+              {next}
           </div>  
         </div>
 
@@ -198,6 +210,10 @@ var Register = React.createClass({
         </div>
       </div>
     );
+  },
+
+  _handleSubmit: function(){
+    SubmissionActionCreators.register(this.state.details);
   },
 
   _handleNext: function(){

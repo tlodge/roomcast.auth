@@ -1,8 +1,29 @@
 var React = require('react');
 var RegisterActionCreators = require('../actions/RegisterActionCreators');
 var ENTER_KEY_CODE = 13;
-                  
+var DevelopmentStore = require('../stores/DevelopmentStore');
+var extend = require('extend');
+
+function getStateFromStores() {
+  return {
+    matches: DevelopmentStore.matches(10)
+  };
+}
+
 var Location = React.createClass({
+
+  getInitialState: function() {
+    return getStateFromStores();
+  },
+
+  componentDidMount: function() {
+    DevelopmentStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    DevelopmentStore.removeChangeListener(this._onChange);
+  },
+
 
   render: function(){
 
@@ -28,6 +49,8 @@ var Location = React.createClass({
       }.bind(this));
     }
 
+    var props = extend(extend({}, this.props), this.state);
+
     return (
 
         
@@ -43,10 +66,10 @@ var Location = React.createClass({
               <label> your apartment number
                 <div className="row">
                   <div className="small-4 large-2 columns">
-                    <ApartmentSelect {...this.props}/>
+                    <ApartmentSelect {...props}/>
                   </div>
                   <div className="small-8 large-10 columns">
-                     <ApartmentMatches {...this.props}/>
+                     <ApartmentMatches {...props}/>
                   </div>
                 </div>
               </label>
@@ -60,6 +83,10 @@ var Location = React.createClass({
   _handleSelect: function(blockId){
     RegisterActionCreators.selectBlock(blockId);
   },
+
+  _onChange: function() {
+    this.setState(getStateFromStores());
+  }
   
 });
 

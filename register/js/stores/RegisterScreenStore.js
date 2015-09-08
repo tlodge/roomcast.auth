@@ -13,7 +13,7 @@ var DevelopmentStore = require('./DevelopmentStore');
 
 var CHANGE_EVENT = 'change';
 var ActionTypes = RegisterConstants.ActionTypes;
-var _screens = ["code", "location", "occupancy", "contacts"];
+var _screens = ["code", "userdetails","location", "occupancy", "contacts"];
 var _screenIndex = 0;
 
 
@@ -29,6 +29,13 @@ var _previous_screen = function(){
  _screenIndex = (--_screenIndex)%_screens.length;
 };
 
+var _hasvalue = function(obj){
+  if (!obj) 
+    return false;
+  else 
+    return obj.trim() !== "";
+};
+
 var ScreenStore = assign({}, EventEmitter.prototype, {
 
   cangoback: function(){
@@ -36,19 +43,25 @@ var ScreenStore = assign({}, EventEmitter.prototype, {
   },
 
   canprogress: function(){
+
+    var _details = DevelopmentStore.details();
+    
     switch (_screens[_screenIndex]){
 
       case "code":
-        return  DevelopmentStore.development() !== null;
+        return  _details.development !== null;
       
+      case "userdetails":
+        return _hasvalue(_details.username) && _hasvalue(_details.firstname) && _hasvalue(_details.surname); 
+
       case "location":
-        return DevelopmentStore.apartment() !== null; 
+        return _details.apartment !== null; 
 
       case "occupancy":
-        return  DevelopmentStore.selectedoccupancy() !== null; 
+        return _details.selectedoccupancy!== null; 
 
       case "contacts":
-        return  DevelopmentStore.mobile().trim() !== "" && DevelopmentStore.email().trim(); 
+        return _hasvalue(_details.mobile) && _hasvalue(_details.email); 
 
       default:
         return false;

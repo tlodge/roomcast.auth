@@ -1,9 +1,9 @@
-var $ = require('jquery');
 var request = require('superagent');
 var ServerActionCreators = require('../actions/ServerActionCreators');
 
 module.exports = {
 
+  //do we need to stringify the data??
   login: function(username, password){
     request
       .post('/login')
@@ -20,6 +20,21 @@ module.exports = {
           console.log(res.xhr.responseURL);
           window.location.href = res.xhr.responseURL;
         }
+     });
+  },
+
+  register: function(details){
+      request
+        .post('/auth/register')
+        .send(details)
+        .set('Accept', 'application/json')
+        .end(function(err, res){
+          if (err){
+            console.log(err);
+          }else{
+            console.log(res.xhr.responseURL);
+            //window.location.href = res.xhr.responseURL;
+          }
      });
   },
 

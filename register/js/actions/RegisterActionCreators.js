@@ -62,6 +62,27 @@ var RegisterActionCreators = {
     });
   },
 
+  updateUsername: function(username){
+     AppDispatcher.handleViewAction({
+      type: ActionTypes.USERNAME_UPDATED,
+      username: username,
+    });
+  },
+
+  updateFirstname: function(firstname){
+  
+     AppDispatcher.handleViewAction({
+      type: ActionTypes.FIRSTNAME_UPDATED,
+      firstname: firstname,
+    });
+  },
+
+  updateSurname: function(surname){
+     AppDispatcher.handleViewAction({
+      type: ActionTypes.SURNAME_UPDATED,
+      surname: surname,
+    });
+  }
 };
 
 
