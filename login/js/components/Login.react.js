@@ -1,6 +1,7 @@
 var React = require('react');
 var WebAPIUtils = require('../utils/WebAPIUtils');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
+var TextField = require('./TextField.react');
 
 var Login = React.createClass({
 
@@ -196,10 +197,10 @@ var Login = React.createClass({
           </div>
 
           <div style={logincontainer}>
-            <form ref="login" action="/login" method="post">
+            <form ref="submissionform" action={this.props.actionurl} method="post">
               <div>
-                <LoginUserName errorText={this.state.usernameerror} username={this.state.username} handleUpdate={this._handleUserNameUpdate} />
-                <LoginPassword errorText={this.state.passworderror} password={this.state.password} handleUpdate={this._handlePasswordUpdate}/>
+                 <TextField errorText={this.state.usernameerror} name="username" value={this.state.username} handler={this._handleUserNameUpdate}/>
+                 <TextField type="password" name="password" errorText={this.state.passworderror} value={this.state.password} handler={this._handlePasswordUpdate}/>
               </div>    
               
             </form>
@@ -212,6 +213,7 @@ var Login = React.createClass({
 	},
 
   _handlePasswordUpdate: function(password){
+    console.log("seen password update!!");
     if (password !== ""){
       this.setState({passworderror:""});
     }
@@ -220,6 +222,7 @@ var Login = React.createClass({
   },
 
   _handleUserNameUpdate: function(username){
+    console.log("seen username update!!");
     if (username !== ""){
       this.setState({usernameerror:""});
     }
@@ -228,7 +231,7 @@ var Login = React.createClass({
   },
 
   _handleSubmit: function(){
-  
+
     var valid = true;
     if (this.state.username === ""){
       this.setState({usernameerror:"please provide your username"});
@@ -241,7 +244,9 @@ var Login = React.createClass({
     }
 
     if (valid){
-      React.findDOMNode(this.refs.login).submit();
+      console.log("submitting form!!!");
+      console.log(React.findDOMNode(this.refs.submissionform));
+      React.findDOMNode(this.refs.submissionform).submit();
     }
   },
 
