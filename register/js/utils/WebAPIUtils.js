@@ -25,7 +25,7 @@ module.exports = {
 
   register: function(details){
       request
-        .post('/auth/register')
+        .post('/auth/details')
         .send(details)
         .set('Accept', 'application/json')
         .end(function(err, res){
