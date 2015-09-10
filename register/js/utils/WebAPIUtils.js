@@ -32,8 +32,7 @@ module.exports = {
           if (err){
             console.log(err);
           }else{
-            console.log(res.xhr.responseURL);
-            //window.location.href = res.xhr.responseURL;
+            ServerActionCreators.registrationResponse(res.body);
           }
      });
   },
