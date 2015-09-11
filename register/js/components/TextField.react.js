@@ -25,7 +25,7 @@ var TextField = React.createClass({
     if (event.keyCode === ENTER_KEY_CODE) {
       event.preventDefault();
       var text = this.state.text.trim();
-      this.props.hander(text);
+      this.props.handler(text);
     }
   }
 
