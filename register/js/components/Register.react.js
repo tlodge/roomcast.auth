@@ -213,6 +213,8 @@ var Register = React.createClass({
   },
 
   _handleSubmit: function(){
+    console.log("OK SEEN A REGISTER CLICK!!");
+    console.log(this.state.details);
     SubmissionActionCreators.register(this.state.details);
   },
 

@@ -381,15 +381,20 @@ var Login = React.createClass({
     }
     
     if (this.state.password === ""){
-       console.log(this.refs.password);
-      console.log(this.refs.password.value);
       this.setState({passworderror:"please provide your password!"});
       valid = false;
     }
 
     if (valid){
-      //React.findDOMNode(this.refs.submissionform).submit();
-      WebAPIUtils.login({username:this.state.username, password:this.state.password});
+      
+      //if registring, do a standard form submission
+      if (this.props.actionurl === "/auth/register"){
+        console.log("registering..");
+        React.findDOMNode(this.refs.submissionform).submit();
+      }else{
+        //otherwise login ajax style..
+        WebAPIUtils.login({username:this.state.username, password:this.state.password});
+      }
     }
   },
 
