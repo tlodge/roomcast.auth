@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Tom Lodge
  * All rights reserved.
  *
- * ScreenActionCreators
+ * LoginActionCreators
  */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -10,14 +10,15 @@ var AuthConstants = require('../constants/AuthConstants');
 
 var ActionTypes = AuthConstants.ActionTypes;
 
-var ScreenActionCreators = {
+var LoginActionCreators = {
 
-  changeScreen: function(screen){
+  loginFailure: function(message){
+  	console.log("DISPATCHING LOGIN FAILRE!!!");
   	AppDispatcher.handleViewAction({
-      	type: ActionTypes.CHANGE_SCREEN,
-     	screen: screen,
+    	type: ActionTypes.LOGIN_FAILURE,
+    	message: message,
     });
   }
 };
 
-module.exports = ScreenActionCreators;
+module.exports = LoginActionCreators;

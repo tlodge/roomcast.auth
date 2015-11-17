@@ -56,14 +56,14 @@ var Splash = React.createClass({
 
     var registerprops = {
         socialtitle : "link with <strong>facebook</strong> or <strong>google</strong>",
-        roomcasttitle : "create a new <strong>roomcast</strong> account",
+        roomcasttitle : "create a new <strong>buttonkit</strong> account",
         action: 'register',
         actionurl: '/auth/register'
     };
 
     var loginprops = {
         socialtitle : "login with <strong>facebook</strong> or <strong>google</strong>",
-        roomcasttitle : "login with your <strong>roomcast</strong> account",
+        roomcasttitle : "login with your <strong>buttonkit</strong> account",
         action: 'login',
         actionurl: '/auth/login'
     };

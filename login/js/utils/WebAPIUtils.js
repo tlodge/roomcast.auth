@@ -1,23 +1,26 @@
-var $ = require('jquery');
+//var $ = require('jquery');
 var request = require('superagent');
-
+var LoginActionCreators = require('../actions/LoginActionCreators');
 module.exports = {
 
-  login: function(username, password){
+  login: function(data){
     request
-      .post('/login')
-      .send(JSON.stringify({
-        username: username,
-        password: password
-      }))
+      .post('/auth/login')
+      .send(data)
       .set('Accept', 'application/json')
       .end(function(err, res){
         if (err){
+          console.log("OK GOT ERROR");
           console.log(err);
         }else{
-
-          console.log(res.xhr.responseURL);
-          window.location.href = res.xhr.responseURL;
+          console.log(res.body);
+          if (res.body.success){
+            window.location.href = "/";
+          }else{
+            console.log("ACLLING LOGIN FAILURE...");
+            console.log(res.body.message);
+            LoginActionCreators.loginFailure(res.body.message || "");
+          }
         }
      });
   }

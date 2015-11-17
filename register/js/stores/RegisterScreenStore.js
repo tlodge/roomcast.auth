@@ -49,6 +49,9 @@ var ScreenStore = assign({}, EventEmitter.prototype, {
     switch (_screens[_screenIndex]){
 
       case "code":
+        console.log("ok details development is");
+        console.log(_details.development);
+        console.log(_details.development !== null);
         return  _details.development !== null;
       
       case "userdetails":

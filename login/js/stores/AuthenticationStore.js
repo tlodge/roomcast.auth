@@ -12,12 +12,22 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 var ActionTypes = AuthConstants.ActionTypes;
-var _loggedIn = false;
+var _message = "";
+
+var _seterror = function(message){
+  console.log("set message to");
+  _message = message;
+  console.log(_message);
+};
 
 var AuthenticationStore = assign({}, EventEmitter.prototype, {
 
-  loggedIn: function() {
-    return _loggedIn;
+  usernameError: function() {
+    return _message;
+  },
+
+  passwordError: function() {
+    return _message;
   },
 
   emitChange: function() {
@@ -44,10 +54,11 @@ AuthenticationStore.dispatchToken = AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
-  case ActionTypes.RAW_LOGIN:
-    _loggedIn = true;
-    AuthenticationStore.emitChange();
-    break;
+    case ActionTypes.LOGIN_FAILURE:
+      console.log("store --- seeen login failure!!");
+      _seterror(action.action.message);
+      AuthenticationStore.emitChange();
+      break;
 
     default:
       // no op
