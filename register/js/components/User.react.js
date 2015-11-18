@@ -5,20 +5,25 @@ var TextField = require('./TextField.react');
 var User = React.createClass({
 
   render: function(){
- 
+  
+    var selectuser;
+
+    if (this.props.canchooseusername){
+      selectuser = <div className="cell">
+                      <label>choose a username 
+                        <div className="row">
+                          <div className="small-8 large-8 columns">
+                            <TextField value={this.props.username} handler={RegisterActionCreators.updateUsername}/>
+                          </div>
+                        </div>
+                      </label>  
+                    </div>
+    }
 
     return (
         <div className="row">
           <div className="large-12 columns unpadded">
-            <div className="cell">
-              <label>choose a username 
-              	 <div className="row">
-                  <div className="small-8 large-8 columns">
-                     <TextField value={this.props.username} handler={RegisterActionCreators.updateUsername}/>
-                  </div>
-                </div>
-              </label>  
-            </div>
+            {selectuser}
             <div className="cell">
               <label>your first name 
                  <div className="row">

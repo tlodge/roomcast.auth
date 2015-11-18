@@ -1,12 +1,12 @@
 var React = require('react');
 var RegisterActionCreators = require('../actions/RegisterActionCreators');
 var ENTER_KEY_CODE = 13;
-var DevelopmentStore = require('../stores/DevelopmentStore');
+var RegisterStore = require('../stores/RegisterStore');
 var extend = require('extend');
 
 function getStateFromStores() {
   return {
-    matches: DevelopmentStore.matches(10)
+    matches: RegisterStore.matches(10)
   };
 }
 
@@ -17,11 +17,11 @@ var Location = React.createClass({
   },
 
   componentDidMount: function() {
-    DevelopmentStore.addChangeListener(this._onChange);
+    RegisterStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
-    DevelopmentStore.removeChangeListener(this._onChange);
+    RegisterStore.removeChangeListener(this._onChange);
   },
 
 

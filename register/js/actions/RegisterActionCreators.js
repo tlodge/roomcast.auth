@@ -69,6 +69,14 @@ var RegisterActionCreators = {
     });
   },
 
+  /* used when the username has been previously chosen (on login screen)*/
+  setUsername: function(username){
+    AppDispatcher.handleViewAction({
+      type: ActionTypes.USERNAME_SET,
+      username: username,
+    });
+  },
+
   updateFirstname: function(firstname){
   
      AppDispatcher.handleViewAction({

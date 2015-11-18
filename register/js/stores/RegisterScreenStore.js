@@ -2,14 +2,14 @@
  * Copyright (c) 2015, Tom Lodge
  * All rights reserved.
  *
- * AuthenticationStore
+ * RegisterScreenStore
  */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var RegisterConstants = require('../constants/RegisterConstants');
 var assign = require('object-assign');
-var DevelopmentStore = require('./DevelopmentStore');
+var RegisterStore = require('./RegisterStore');
 
 var CHANGE_EVENT = 'change';
 var ActionTypes = RegisterConstants.ActionTypes;
@@ -36,7 +36,7 @@ var _hasvalue = function(obj){
     return obj.trim() !== "";
 };
 
-var ScreenStore = assign({}, EventEmitter.prototype, {
+var RegisterScreenStore = assign({}, EventEmitter.prototype, {
 
   cangoback: function(){
     return _screenIndex !== 0;
@@ -44,14 +44,11 @@ var ScreenStore = assign({}, EventEmitter.prototype, {
 
   canprogress: function(){
 
-    var _details = DevelopmentStore.details();
+    var _details = RegisterStore.details();
     
     switch (_screens[_screenIndex]){
 
       case "code":
-        console.log("ok details development is");
-        console.log(_details.development);
-        console.log(_details.development !== null);
         return  _details.development !== null;
       
       case "userdetails":
@@ -95,23 +92,19 @@ var ScreenStore = assign({}, EventEmitter.prototype, {
 });
 
 // Register callback to handle all updates
-ScreenStore.dispatchToken = AppDispatcher.register(function(action) {
+RegisterScreenStore.dispatchToken = AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
-    case ActionTypes.CHANGE_SCREEN:
-      //_set_screen(action.action.screen);
-      //ScreenStore.emitChange();
-    break;
 
     case ActionTypes.NEXT_SCREEN:
       _next_screen();
-      ScreenStore.emitChange();
+      RegisterScreenStore.emitChange();
       break;
 
     case ActionTypes.PREVIOUS_SCREEN:
       _previous_screen();
-      ScreenStore.emitChange();
+      RegisterScreenStore.emitChange();
       break;
 
     default:
@@ -119,4 +112,4 @@ ScreenStore.dispatchToken = AppDispatcher.register(function(action) {
   }
 });
 
-module.exports = ScreenStore;
+module.exports = RegisterScreenStore;

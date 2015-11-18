@@ -22,6 +22,7 @@ module.exports = {
 		MOBILE_UPDATED:null,
 		EMAIL_UPDATED:null,
 		USERNAME_UPDATED:null,
+		USERNAME_SET:null,
 		FIRSTNAME_UPDATED:null,
 		SURNAME_UPDATED:null,
   	}),

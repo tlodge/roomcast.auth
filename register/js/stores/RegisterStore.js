@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Tom Lodge
  * All rights reserved.
  *
- * DevelopmentStore
+ * RegisterStore
  */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
@@ -22,6 +22,11 @@ var _occupancies = [
   {id:"tenant", name:"tenant"},
   {id:"owneroccupant", name:"own and occupy"},
 ];
+
+var _setUsername = function(username){
+   _details.canchooseusername = (username==="");
+   _details.username = username;
+};
 
 var _updateUsername = function(username){
   _details.username = username;
@@ -106,7 +111,7 @@ var _selectBlock = function(block){
    _details.selectedblock = block;
 };
 
-var DevelopmentStore = assign({}, EventEmitter.prototype, {
+var RegisterStore = assign({}, EventEmitter.prototype, {
 
 
   readytosubmit: function(){
@@ -157,67 +162,72 @@ var DevelopmentStore = assign({}, EventEmitter.prototype, {
 });
 
 // Register callback to handle all updates
-DevelopmentStore.dispatchToken = AppDispatcher.register(function(action) {
+RegisterStore.dispatchToken = AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
   case ActionTypes.RAW_DEVELOPMENT:
     _setDevelopment(action.action.data);
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
     break;
 
   case ActionTypes.BLOCK_SELECTED:
     _selectBlock(action.action.block);
     _findMatches();
     _unselectApartment();
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
     break;
 
   case ActionTypes.APARTMENT_PARTIAL:
     _findMatches(action.action.partial);
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
     break;
 
   case ActionTypes.APARTMENT_SELECTED:
     _selectApartment(action.action.apartment);
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
     break;
 
   case ActionTypes.APARTMENT_SELECTED_BY_NAME:
     _selectApartmentByName(action.action.name);
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
     break;
 
   case ActionTypes.OCCUPANCY_SELECTED:
     _selectOccupancy(action.action.occupancy);
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
     break;
 
   case ActionTypes.MOBILE_UPDATED:
     
     _updateMobile(action.action.mobile);
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
     break;
 
   case ActionTypes.EMAIL_UPDATED:
 
     _updateEmail(action.action.email);
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
     break;
 
   case ActionTypes.USERNAME_UPDATED:
     _updateUsername(action.action.username);
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
+    break;
+
+  case ActionTypes.USERNAME_SET:
+    _setUsername(action.action.username);
+    RegisterStore.emitChange();
     break;
 
   case ActionTypes.FIRSTNAME_UPDATED:
     _updateFirstname(action.action.firstname);
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
     break;
 
   case ActionTypes.SURNAME_UPDATED:
     _updateSurname(action.action.surname);
-    DevelopmentStore.emitChange();
+    RegisterStore.emitChange();
     break;
 
   default:
@@ -225,4 +235,4 @@ DevelopmentStore.dispatchToken = AppDispatcher.register(function(action) {
   }
 });
 
-module.exports = DevelopmentStore;
+module.exports = RegisterStore;

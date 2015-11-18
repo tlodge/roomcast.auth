@@ -2,7 +2,7 @@ var React = require('react');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
 var SubmissionActionCreators = require('../actions/SubmissionActionCreators');
 var RegisterScreenStore = require('../stores/RegisterScreenStore');
-var DevelopmentStore = require('../stores/DevelopmentStore');
+var RegisterStore = require('../stores/RegisterStore');
 var Location = require('./Location.react');
 var Code = require('./Code.react');
 var User = require('./User.react');
@@ -15,9 +15,9 @@ function getStateFromStores() {
     screen: RegisterScreenStore.screen(),
     cangoback: RegisterScreenStore.cangoback(),
     canprogress: RegisterScreenStore.canprogress(),
-    details: DevelopmentStore.details(),
-    occupancies: DevelopmentStore.occupancies(),
-    readytosubmit: DevelopmentStore.readytosubmit(),
+    details: RegisterStore.details(),
+    occupancies: RegisterStore.occupancies(),
+    readytosubmit: RegisterStore.readytosubmit(),
 
   };
 }
@@ -29,12 +29,12 @@ var Register = React.createClass({
   },
 
   componentDidMount: function() {
-     DevelopmentStore.addChangeListener(this._onChange);
+     RegisterStore.addChangeListener(this._onChange);
      RegisterScreenStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
-    RegisterScreenStore.removeChangeListener(this._onChange);
+    RegisterStore.removeChangeListener(this._onChange);
     DevelopmentStore.removeChangeListener(this._onChange);
   },
 
