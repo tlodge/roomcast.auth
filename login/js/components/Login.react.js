@@ -128,7 +128,9 @@ var Login = React.createClass({
                     </a>
                   </div>
                   <div className="small-6 columns">
-                    <img style={socialimgstyle} src="../svgs/social/facebook.svg"/>
+                    <a href="/auth/facebook">
+                      <img style={socialimgstyle} src="../svgs/social/facebook.svg"/>
+                    </a>
                   </div>
                 </div>
               </div>   
