@@ -22,7 +22,7 @@
     "reactify": "^0.15.2",
     "uglify-js": "~2.4.15",
     "watchify": "^2.1.1",
-    "react-router": "1.0.0-rc1",
+    "react-router": "1.0.0-rc1"
   },
   "scripts": {
     "start": "watchify -o ../../roomcast.server/static/js/register.js -v -d .",
