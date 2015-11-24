@@ -1,4 +1,7 @@
-/js/bundle.js
 npm-debug.log
-/js/bundle.min.js
+/login/js/login.js
+/register/js/register.js
 /node_modules
+/login/node_modules
+/register/node_modules
+
