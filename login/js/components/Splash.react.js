@@ -173,8 +173,8 @@ var About = React.createClass({
       <div style={rightscreen}>
         <div style={roomcast}>
           <div style ={logotextcontainer}>
-            <div style={logoheading}>roomcast</div>
-            <div style={logosubheading}>the internet of getting things done</div>
+            <div style={logoheading}>buttonkit</div>
+            <div style={logosubheading}>the internet of things getting done</div>
           </div> 
           <img style={logostyle} src="../svgs/cloudlogo.svg"/>
         </div>
