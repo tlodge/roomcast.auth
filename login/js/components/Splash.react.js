@@ -288,20 +288,20 @@ var Options = React.createClass({
   },
 
    _loginScreen: function(event){
-      
       event.stopPropagation();
       event.preventDefault();
-      console.log("changing to login!!--");
       this.props.changeScreen("login");
   },
 
   _registerScreen: function(event){
-      console.log("changing to register!!");
+      event.stopPropagation();
+      event.preventDefault();
       this.props.changeScreen("register");
   },
 
   _registerBuildingScreen: function(event){
-      console.log("changing to register building!!");
+      event.stopPropagation();
+      event.preventDefault();
       this.props.changeScreen("registerbuilding");
   },
 
