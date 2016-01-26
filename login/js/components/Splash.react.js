@@ -287,17 +287,20 @@ var Options = React.createClass({
     );
   },
 
-   _loginScreen: function(){
-      console.log("changing to login!!");
+   _loginScreen: function(event){
+      
+      event.stopPropagation();
+      event.preventDefault();
+      console.log("changing to login!!--");
       this.props.changeScreen("login");
   },
 
-  _registerScreen: function(){
+  _registerScreen: function(event){
       console.log("changing to register!!");
       this.props.changeScreen("register");
   },
 
-  _registerBuildingScreen: function(){
+  _registerBuildingScreen: function(event){
       console.log("changing to register building!!");
       this.props.changeScreen("registerbuilding");
   },
