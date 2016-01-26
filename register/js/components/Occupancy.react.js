@@ -58,9 +58,6 @@ var OccupancyItem = React.createClass({
   },
 
   _handleSelect: function(){
-    console.log("selecting occupancy");
-    console.log(this.props.occupancy);
-
     RegisterActionCreators.selectOccupancy(this.props.occupancy);
   },
 
