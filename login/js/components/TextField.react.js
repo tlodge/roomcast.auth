@@ -12,6 +12,7 @@ var TextField = React.createClass({
     return{
       type: "text",
       handler: function(){},
+      enterhandler: function(){},
       name: "",
       errorText:"",
       label:"",
@@ -52,7 +53,7 @@ var TextField = React.createClass({
     if (event.keyCode === ENTER_KEY_CODE) {
       event.preventDefault();
       var text = this.state.text.trim();
-      this.props.handler(text);
+      this.props.enterhandler(text);
     }
   }
 
