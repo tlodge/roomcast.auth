@@ -33,15 +33,10 @@ var _updateUsername = function(username){
 };
 
 var _updateFirstname = function(firstname){
-   console.log("updating first name");
-  console.log(firstname);
-  
   _details.firstname = firstname;
 };
 
 var _updateSurname = function(surname){
-     console.log("updating surname");
-  console.log(surname);
   _details.surname = surname;
 };
 

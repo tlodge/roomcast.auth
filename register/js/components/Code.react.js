@@ -23,7 +23,7 @@ var Code = React.createClass({
     return (
               <div className="row" style={padstyle}>
                 <div className="large-12 columns">
-                    <input type="text" onChange={this._onChange} value={this.state.text} className="code" placeholder="development code"/>
+                    <input type="text" onChange={this._onChange} value={this.state.text} className="code" placeholder="development code (7C26-PXQG)"/>
                     {development}
                 </div>
               </div>
@@ -35,8 +35,6 @@ var Code = React.createClass({
     this.setState({text: text});
     if (text!=="" && cc.validate(text, {parts:2, partLen:4}) !== ""){
       WebAPIUtils.getDevelopment(text);
-    }else{
-      console.log("NOT YET VALID!!");
     }
   },
 

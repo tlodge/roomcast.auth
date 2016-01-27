@@ -58,9 +58,9 @@ var Location = React.createClass({
           <div className="large-12 columns unpadded">
             <div className="cell">
               <label>your block </label>  
-              <ul className="button-group">
+              <div className="button-group small">
                    {blocks}
-              </ul>
+              </div>
             </div>
             <div className="cell noborder">
               <label> your apartment number
@@ -154,7 +154,7 @@ var ApartmentMatches = React.createClass({
       };
       return <Apartment key={apartment.apartmentId} {...props} />;
     }.bind(this));
-    return <ul className="button-group" style={nomargins} >{apartments}</ul>;
+    return <div className="button-group small" style={nomargins} >{apartments}</div>;
   },
 });
 
@@ -167,7 +167,7 @@ var Apartment = React.createClass({
       background: this.props.selected ? '#d35a51' : '#7bb6a4'
     };
 
-    return <li><a onTouchTap={this._handleSelect} className="button tiny" style={background}>{this.props.apartment.name}</a></li>;
+    return <div onTouchTap={this._handleSelect} className="button" style={background}>{this.props.apartment.name}</div>;
   },
 
   _handleSelect: function(){
@@ -178,14 +178,12 @@ var Apartment = React.createClass({
 var Block = React.createClass({
 
   render: function(){
-    var listyle={
-      display: 'inline-block'
-    };
+    
     var background = {
       background: this.props.selected ? '#d35a51' : '#7bb6a4'
     };
 
-    return <li onTouchTap={this._handleSelect} style={listyle}><div style={background} className="button tiny">{this.props.block.name}</div></li>;
+    return <div onTouchTap={this._handleSelect} style={background} className="button">{this.props.block.name}</div>;
   },
 
   _handleSelect: function(){

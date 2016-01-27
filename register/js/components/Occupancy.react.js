@@ -5,18 +5,6 @@ var Occupancy = React.createClass({
 
   render: function(){
     
-    var apartment ={
-      color: "#445662",
-      fontSize: "110%",
-      textAlign: 'center'
-    };
-
-    var block = {
-      color: "#445662",
-      fontSize: "90%",
-      textAlign: 'center'
-    };
-   
     var occupancies = this.props.occupancies.map(function(occupancy){
       var props = {
         occupancy: occupancy,
@@ -30,9 +18,9 @@ var Occupancy = React.createClass({
           <div className="large-12 columns unpadded">
             <div className="cell">
               <label>{this.props.apartment.name},{this.props.selectedblock.name}</label>  
-              <ul className="button-group">
+              <div className="button-group small">
                  {occupancies}
-              </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -46,15 +34,13 @@ var OccupancyItem = React.createClass({
 
 
   render: function(){
-     var listyle={
-      display: 'inline-block'
-    };
+     
     
     var background = {
       background: this.props.selected ? '#d35a51' : '#7bb6a4'
     };
     
-    return   <li style={listyle}><div  onTouchTap={this._handleSelect} style={background} className="button tiny">{this.props.occupancy.name}</div></li>;
+    return  <div  onTouchTap={this._handleSelect} style={background} className="button small">{this.props.occupancy.name}</div>;
   },
 
   _handleSelect: function(){

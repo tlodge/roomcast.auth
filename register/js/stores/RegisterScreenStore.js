@@ -10,7 +10,6 @@ var EventEmitter = require('events').EventEmitter;
 var RegisterConstants = require('../constants/RegisterConstants');
 var assign = require('object-assign');
 var RegisterStore = require('./RegisterStore');
-
 var CHANGE_EVENT = 'change';
 var ActionTypes = RegisterConstants.ActionTypes;
 var _screens = ["code", "userdetails","location", "occupancy", "contacts"];
@@ -49,16 +48,16 @@ var RegisterScreenStore = assign({}, EventEmitter.prototype, {
     switch (_screens[_screenIndex]){
 
       case "code":
-        return  _details.development !== null;
+        return  _details.development != null;
       
       case "userdetails":
         return _hasvalue(_details.username) && _hasvalue(_details.firstname) && _hasvalue(_details.surname); 
 
       case "location":
-        return _details.apartment !== null; 
+        return _details.apartment != null; 
 
       case "occupancy":
-        return _details.selectedoccupancy!== null; 
+        return _details.selectedoccupancy != null; 
 
       case "contacts":
         return _hasvalue(_details.mobile) && _hasvalue(_details.email); 
@@ -95,7 +94,6 @@ var RegisterScreenStore = assign({}, EventEmitter.prototype, {
 RegisterScreenStore.dispatchToken = AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
-
 
     case ActionTypes.NEXT_SCREEN:
       _next_screen();

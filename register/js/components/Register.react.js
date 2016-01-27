@@ -180,7 +180,8 @@ var Register = React.createClass({
     var nextcallback = this._handleNext;
 
     if (this.state.cangoback){
-      back = <a style={backstyle} onTouchTap={this._handleBack} className='right'>back</a>;
+      back = <a style={backstyle} onTouchTap={this._handleBack} className='float-right'>back</a>
+            
     }
     if (this.state.screen === 'contacts' && this.state.readytosubmit){
       next = "done!";
