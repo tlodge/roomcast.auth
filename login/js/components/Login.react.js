@@ -115,7 +115,7 @@ var Login = React.createClass({
     return (<div style={loginback}>
               <div className='clearfix' style={topbar}>
                 <a style={maintitle} className='left'> {this.props.action}</a>
-                <a onTouchTap={this._handleBack} style={back} className='right'>back</a>
+                <a onTouchTap={this._handleBack} style={back} className='float-right'>back</a>
               </div>
               <div style={logincontainer}>
                 <div className="row">
