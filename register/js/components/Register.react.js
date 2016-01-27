@@ -169,7 +169,7 @@ var Register = React.createClass({
       position:'absolute', 
       bottom:0, 
       width: housewidth, 
-      zIndex: 20
+      zIndex: 50
     };
 
     var contentstyle ={
