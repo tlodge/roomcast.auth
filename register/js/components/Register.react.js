@@ -44,7 +44,8 @@ var Register = React.createClass({
     var content;
     
     var props = extend({  next:this._handleNext, 
-                          occupancies:this.state.occupancies
+                          occupancies:this.state.occupancies,
+                          width: this.props.width - 30,
                         }, this.state.details);
     
 
