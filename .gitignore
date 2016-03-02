@@ -1,6 +1,8 @@
 npm-debug.log
 /login/js/login.js
+/login/js/login.min.js
 /register/js/register.js
+/register/js/register.min.js
 /node_modules
 /login/node_modules
 /register/node_modules

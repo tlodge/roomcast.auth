@@ -26,8 +26,8 @@
     "react-router": "1.0.0-rc1"
   },
   "scripts": {
-    "start": "watchify -o ../../roomcast.server/static/js/register.js -v -d .",
-    "build": "NODE_ENV=production browserify . | uglifyjs -cm > ../../roomcast.server/static/js/register.js",
+    "start": "watchify -o ./js/register.js -v -d .",
+    "build": "NODE_ENV=production browserify . | uglifyjs -cm > ./js/register.min.js",
     "test": "jest"
   },
   "browserify": {
