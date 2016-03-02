@@ -1,8 +1,8 @@
 npm-debug.log
-login/js/login.js
-login/js/login.min.js
-register/js/register.js
-register/js/register.min.js
+login/dist/login.js
+login/dist/login.min.js
+register/dist/register.js
+register/dist/register.min.js
 node_modules
 login/node_modules
 login/npm-debug.log

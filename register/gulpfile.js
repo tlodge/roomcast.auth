@@ -24,7 +24,7 @@ gulp.task('build', function () {
    .pipe(source('register.min.js'))
    .pipe(buffer()) 
    .pipe(uglify().on('error', gutil.log))
-   .pipe(gulp.dest('./js'));
+   .pipe(gulp.dest('./dist'));
 });
 
 // When running 'gulp' on the terminal this task will fire.
