@@ -8,12 +8,10 @@ var Splash = require('./components/Splash.react');
 
 React.initializeTouchEvents(true);
 
-
 var App = React.createClass({
 	render: function(){
 		return <Splash />;
 	}
-
 });
 
 React.render(

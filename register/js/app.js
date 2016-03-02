@@ -9,9 +9,7 @@ var RegisterActionCreators = require('./actions/RegisterActionCreators');
 
 React.initializeTouchEvents(true);
 
-
 var App = React.createClass({
-
   	
 	componentWillMount: function(){
 		RegisterActionCreators.setUsername(document.getElementById("register").getAttribute("data-username").trim());

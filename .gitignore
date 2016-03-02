@@ -5,6 +5,8 @@ register/js/register.js
 register/js/register.min.js
 node_modules
 login/node_modules
+login/npm-debug.log
 register/node_modules
+register/npm-debug.log
 .DS_Store
 ._.DS_Store
