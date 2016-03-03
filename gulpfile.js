@@ -16,12 +16,23 @@ gulp.task('watch', function () {
 });
 
 gulp.task('build', function () {
+    
+    var option = "bundle";
+
+    var i = process.argv.indexOf("--name");
+
+    if (i >-1 && process.argv.length > (i + 1)){
+	option = process.argv[i+1];
+    }
+   
+    console.log("building with name " + option + '.min.js');
+
     browserify({
             entries: './js/app.js',
             debug: true
     })
    .bundle()
-   .pipe(source('register.min.js'))
+   .pipe(source(option +'.min.js'))
    .pipe(buffer()) 
    .pipe(uglify().on('error', gutil.log))
    .pipe(gulp.dest('./dist'));
