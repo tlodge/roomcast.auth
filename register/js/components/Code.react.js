@@ -37,7 +37,7 @@ var Code = React.createClass({
               <div>
                 <div className="row" style={padstyle}>
                   <div className="large-12 columns">
-                      <input type="text" onChange={this._onChange} value={this.state.text} className="code" placeholder="development code (7C26-PXQG)"/>
+                      <input type="text" onChange={this._onChange} value={this.state.text} className="code" placeholder="development code"/>
                       {development}
                   </div>
                 </div>
