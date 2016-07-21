@@ -115,7 +115,7 @@ var Login = React.createClass({
     return (<div style={loginback}>
               <div className='clearfix' style={topbar}>
                 <a style={maintitle} className='left'> {this.props.action}</a>
-                <a onTouchTap={this._handleBack} style={back} className='float-right'>back</a>
+                <a onClick={this._handleBack} style={back} className='float-right'>back</a>
               </div>
               <div style={logincontainer}>
                 <div className="row">
@@ -148,7 +148,7 @@ var Login = React.createClass({
                 </div>
               </div>
 
-              <div onTouchTap={this._handleSubmit}  style={submitcontainer}>
+              <div onClick={this._handleSubmit}  style={submitcontainer}>
                 <img  style={imagestyle} src="../svgs/house.svg"/>
                 <div style={submitbar}>
                   {this.props.action}

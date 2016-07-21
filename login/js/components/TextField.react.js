@@ -1,6 +1,6 @@
 var React = require('react');
 var ENTER_KEY_CODE = 13;
-var cx = require('react/lib/cx');
+var cx = require('classnames');
 
 var TextField = React.createClass({
   

@@ -5,9 +5,6 @@ var ScreenActionCreators = require('../actions/ScreenActionCreators');
 var ScreenStore = require('../stores/ScreenStore');
 var Login = require("./Login.react");
 
-injectTapEventPlugin = require("react-tap-event-plugin");
-injectTapEventPlugin();
-
 function getStateFromStores() {
   return {
     screen: ScreenStore.screen(),
@@ -271,15 +268,15 @@ var Options = React.createClass({
 
     return (
       <div style={leftscreen}>
-          <div style={tl} onTouchTap={this._registerScreen}>
+          <div style={tl} onClick={this._registerScreen}>
               <img style={smallimagestyle} src="../svgs/register.svg"/>
               <div style={lhlabelbox}>register</div>
           </div>
-          <div style={tr} onTouchTap={this._loginScreen}>
+          <div style={tr} onClick={this._loginScreen}>
               <img style={smallimagestyle} src="../svgs/login.svg"/>
               <div style={rhlabelbox}>log in</div>
           </div>
-              <div style={b} onTouchTap={this._registerBuildingScreen}>
+              <div style={b} onClick={this._registerBuildingScreen}>
               <img style={largeimagestyle} src="../svgs/register_building.svg"/>
               <div style={blabelbox}>register building</div>
           </div>
@@ -294,6 +291,7 @@ var Options = React.createClass({
   },
 
   _registerScreen: function(event){
+      console.log("am heeree!!!!");
       event.stopPropagation();
       event.preventDefault();
       this.props.changeScreen("register");

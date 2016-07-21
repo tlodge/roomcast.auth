@@ -3,10 +3,10 @@
  * All rights reserved.
  */
 
-var React = require('react');
-var Splash = require('./components/Splash.react');
+import React from 'react';
+import { render } from 'react-dom';
 
-React.initializeTouchEvents(true);
+var Splash = require('./components/Splash.react');
 
 var App = React.createClass({
 	render: function(){
@@ -14,6 +14,6 @@ var App = React.createClass({
 	}
 });
 
-React.render(
+render(
 	<App />, document.getElementById('login')
 );
