@@ -7,18 +7,21 @@
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var AuthConstants = require('../constants/AuthConstants');
-
 var ActionTypes = AuthConstants.ActionTypes;
+var WebAPIUtils = require('../utils/WebAPIUtils');
 
 var LoginActionCreators = {
 
-  loginFailure: function(message){
-  	console.log("DISPATCHING LOGIN FAILRE!!!");
+  toggleForgotten: function(){
   	AppDispatcher.handleViewAction({
-    	type: ActionTypes.LOGIN_FAILURE,
-    	message: message,
+    	type: ActionTypes.TOGGLE_FORGOTTEN,
     });
-  }
+  },
+
+  requestReset: function(email){
+	WebAPIUtils.passwordReset(email);
+  },
+
 };
 
 module.exports = LoginActionCreators;

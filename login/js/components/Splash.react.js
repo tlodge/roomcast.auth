@@ -14,7 +14,7 @@ function getStateFromStores() {
 var Splash = React.createClass({
   
   getInitialState: function() {
-    return {width:$(window).width(), height:$(window).height(), screen:"splash"};
+    return {width:$(window).width(), height:$(window).height(), screen:"login"};
   },
 
   componentDidMount: function() {

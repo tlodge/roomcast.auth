@@ -12,6 +12,8 @@ module.exports = {
 	ActionTypes: keyMirror({
 		CHANGE_SCREEN:null,
 		LOGIN_FAILURE:null,
+		TOGGLE_FORGOTTEN: null,
+		RESET_COMPLETE: null,
   	}),
 
   	PayloadSources: keyMirror({

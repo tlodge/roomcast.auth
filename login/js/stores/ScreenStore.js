@@ -14,9 +14,13 @@ var CHANGE_EVENT = 'change';
 var ActionTypes = AuthConstants.ActionTypes;
 var _screen = "splash";
 
+//screens = splash/login/register?
+
 var _set_screen = function(screen){
   _screen = screen;
 };
+
+
 
 var ScreenStore = assign({}, EventEmitter.prototype, {
 
@@ -48,14 +52,16 @@ ScreenStore.dispatchToken = AppDispatcher.register(function(action) {
 
   switch(action.action.type) {
 
-  case ActionTypes.CHANGE_SCREEN:
-    _set_screen(action.action.screen);
-    ScreenStore.emitChange();
-    break;
-
+    case ActionTypes.CHANGE_SCREEN:
+      _set_screen(action.action.screen);
+      ScreenStore.emitChange();
+      break;
+    
+   
+    
     default:
-      // no op
   }
+
 });
 
 module.exports = ScreenStore;

@@ -1,6 +1,6 @@
 //var $ = require('jquery');
 var request = require('superagent');
-var LoginActionCreators = require('../actions/LoginActionCreators');
+var ServerActionCreators = require('../actions/ServerActionCreators');
 module.exports = {
 
   login: function(data){
@@ -10,19 +10,35 @@ module.exports = {
       .set('Accept', 'application/json')
       .end(function(err, res){
         if (err){
-          console.log("OK GOT ERROR");
           console.log(err);
         }else{
-          console.log(res.body);
           if (res.body.success){
             window.location.href = "/";
           }else{
-            console.log("ACLLING LOGIN FAILURE...");
-            console.log(res.body.message);
-            LoginActionCreators.loginFailure(res.body.message || "");
+            ServerActionCreators.loginFailure(res.body.message || "");
           }
         }
      });
+  },
+
+  passwordReset: function(email){
+     request
+      .post('/auth/passwordreset')
+      .send({email:email})
+      .set('Accept', 'application/json')
+      .end(function(err, res){
+        if (err){
+          console.log(err);
+          ServerActionCreators.resetComplete("unable to reset your password - sorry! Please try again later");
+        }else{
+          if (res.body.success){
+            ServerActionCreators.resetComplete("A reset link has been sent to your email address.  Please click it to reset your password.  Please check your spam folders if you do not see the email within the next few minutes.");
+          }else{
+            ServerActionCreators.resetComplete(res.body.message || "");
+          }
+        }
+     });
+
   }
 
 };

@@ -1,6 +1,7 @@
 var React = require('react');
 var WebAPIUtils = require('../utils/WebAPIUtils');
 var ScreenActionCreators = require('../actions/ScreenActionCreators');
+var LoginActionCreators = require('../actions/LoginActionCreators');
 var TextField = require('./TextField.react');
 var extend = require('extend');
 var AuthenticationStore = require('../stores/AuthenticationStore');
@@ -10,13 +11,15 @@ function getStateFromStores() {
   return {
     usernameerror: AuthenticationStore.usernameError(),
     passworderror: AuthenticationStore.passwordError(),
+    forgotten: AuthenticationStore.forgotten(),
+    resetmessage: AuthenticationStore.resetmessage(),
   };
 }
 
 var Login = React.createClass({
 
 	getInitialState: function() {
-    return extend({username:"", password:""}, getStateFromStores());
+    return extend({username:"", password:"", email:""}, getStateFromStores());
   },
 
 	componentDidMount: function() {
@@ -31,7 +34,7 @@ var Login = React.createClass({
     
     var toolbarheight   = 54;
     var submitbarheight = 54;
-    var containerheight = (this.props.height - toolbarheight - submitbarheight)/2; 
+    var containerheight = (this.props.height - toolbarheight - submitbarheight); 
     var titleheight     = 40;
     var houseaspect     = 200/240;
     var shadowratio     = 100/240;
@@ -55,6 +58,7 @@ var Login = React.createClass({
 
     var maintitle = {
       fontSize: '150%',
+      textAlign: "center",
     };
     
     var back = {
@@ -112,8 +116,23 @@ var Login = React.createClass({
       zIndex: 3,
     };
 
-    return (<div style={loginback}>
-              <div className='clearfix' style={topbar}>
+    var forgotten = {
+      color:'rgb(91,91,91)',
+    }
+
+    var reset = {
+      textAlign: 'center',
+      lineHeight: '80px',
+    }
+
+    var helptext = {
+      width: this.props.width,
+      background: '#CD804A',
+      color: 'white',
+      padding: 7,
+      marginBottom: 10,
+    }
+    /*<div className='clearfix' style={topbar}>
                 <a style={maintitle} className='left'> {this.props.action}</a>
                 <a onClick={this._handleBack} style={back} className='float-right'>back</a>
               </div>
@@ -133,9 +152,20 @@ var Login = React.createClass({
                     </a>
                   </div>
                 </div>
-              </div>   
+              </div>   */
+
+    return (<div style={loginback}>
+              <div className='clearfix' style={topbar}>
+                <div style={maintitle} className='left'> login to buttonkit </div>
+               
+              </div>
               <div style={logincontainer}>
-                <div style={title} dangerouslySetInnerHTML={{__html:this.props.roomcasttitle}}></div>
+                
+                {this.state.resetmessage.trim() != "" &&
+                <div style={helptext}>
+                    {this.state.resetmessage}
+                </div>}
+          
                 <div className="row">
                   <div className="small-12 columns">
                     <form ref="submissionform" action={this.props.actionurl} method="post">
@@ -146,8 +176,27 @@ var Login = React.createClass({
                     </form>
                   </div>
                 </div>
-              </div>
+                <div className="row">
+                  <div className="small-12 columns">
+                      <a onClick={this._toggleForgotten} style={forgotten}> I've forgotten my password </a>
+                  </div>
+                </div>
 
+                {this.state.forgotten && <div className="row">
+                  <div className="small-12 columns">
+                    <div className="input-group">
+                      <TextField className="input-group-field" ref="email" label="your email address"  name="email" value={this.state.email} handler={this._handleEmailUpdate}/>
+                      <div className="input-group-button">
+                        <input onClick={this._requestReset} type="submit" className="button" style={{marginTop:9, height:39}} value="Submit"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>}
+
+
+
+
+              </div>
               <div onClick={this._handleSubmit}  style={submitcontainer}>
                 <img  style={imagestyle} src="../svgs/house.svg"/>
                 <div style={submitbar}>
@@ -159,8 +208,17 @@ var Login = React.createClass({
            </div>);
   },
 
+  _requestReset: function(){
+    if (/.+@.+\..+/.test(this.state.email)){
+      LoginActionCreators.requestReset(this.state.email);
+    }
+  },
+
+  _toggleForgotten: function(){
+      LoginActionCreators.toggleForgotten();
+  },
+
   _handleLogin: function(){
-    console.log("handling login!");
     this._handleSubmit();
   },
 
@@ -170,6 +228,12 @@ var Login = React.createClass({
     }
     this.setState({password:password});
   },
+
+  _handleEmailUpdate: function(email){
+
+      this.setState({email:email});
+  },
+
 
   _handleUserNameUpdate: function(username){
     if (username !== ""){
