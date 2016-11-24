@@ -1,6 +1,7 @@
 //var $ = require('jquery');
 var request = require('superagent');
 var ServerActionCreators = require('../actions/ServerActionCreators');
+
 module.exports = {
 
   login: function(data){
@@ -23,7 +24,7 @@ module.exports = {
 
   passwordReset: function(email){
      request
-      .post('/auth/passwordreset')
+      .post('/auth/password/request')
       .send({email:email})
       .set('Accept', 'application/json')
       .end(function(err, res){
