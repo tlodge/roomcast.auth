@@ -7,6 +7,7 @@
     "babel-polyfill": "^6.9.1",
     "classnames": "^2.2.5",
     "coupon-code": "^0.4.3",
+    "css-loader": "^0.28.0",
     "extend": "^3.0.0",
     "flux": "^2.0.1",
     "jquery": "^2.1.3",
@@ -14,6 +15,7 @@
     "object-assign": "^1.0.0",
     "react": "^15.2.1",
     "react-dom": "^15.4.1",
+    "style-loader": "^0.16.1",
     "superagent": "^1.1.0"
   },
   "devDependencies": {
@@ -26,7 +28,7 @@
     "webpack": "^1.13.1"
   },
   "scripts": {
-    "login": "NODE_ENV=production webpack --progress --watch --colors --config webpack.login.config -p",
+    "login": "NODE_ENV=production webpack --progress --colors --config webpack.login.config -p",
     "register": "NODE_ENV=production webpack --progress --watch --colors --config webpack.register.config -p",
     "test": "jest"
   },
